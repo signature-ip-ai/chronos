@@ -12,7 +12,7 @@ public:
     using datflit_t = sc_dt::sc_bv<DATFLIT_WIDTH>;
     using snpflit_t = sc_dt::sc_bv<SNPFLIT_WIDTH>;
 
-    SC_HAS_PROCESS(RnIfxAdapter);
+    SC_HAS_PROCESS(RnDeviceIf);
     RnDeviceIf(sc_core::sc_module_name);
 
     // Reset and Clocking will be provided by the adapter
