@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "*.cpp": "cpp",
+        "*.hpp": "cpp",
+        "*.c": "cpp",
+        "*.h": "cpp"
+    },
+    "files.eol": "\n",
+    "pylint.args": [
+        "--disable=C0111,C0103,W1203,W1201,C0301",
+        "--max-line-length=110"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+    }
+}
