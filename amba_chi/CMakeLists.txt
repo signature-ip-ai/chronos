@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(chica2tlm)
+project(ambachicast)
 
 find_package(SystemCLanguage REQUIRED)
 find_package(spdlog REQUIRED)
@@ -22,6 +22,6 @@ target_link_libraries(${PROJECT_NAME} SystemC::systemc spdlog::spdlog)
 
 
 ########## Install Package Library
-file(GLOB_RECURSE TARGET_LIBRARY_HEADERS include/ca2tlm.hpp)
+file(GLOB_RECURSE TARGET_LIBRARY_HEADERS include/RnIfxAdapter.hpp include/SnIfxAdapter.hpp)
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS BASE_DIRS include FILES ${TARGET_LIBRARY_HEADERS})
 install(TARGETS ${PROJECT_NAME} FILE_SET HEADERS)

@@ -6,13 +6,13 @@ from conan.tools.cmake import CMake, cmake_layout, CMakeDeps, CMakeToolchain
 from conan.tools.build import can_run
 
 
-class chica2tlm_tests(ConanFile):
+class amabchicast_tests(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    systemc_version = "2.3.4"
+    systemc_version = "3.0.1"
     gtest_version = "1.16.0"
-    spdlog_version = "1.15.1"
+    spdlog_version = "1.15.3"
     cmake_version = "3.31.6"
-    chica2tlm_version = "1.0"
+    ambachicast_version = "1.0"
 
     default_options = {
         f"systemc/{systemc_version}:fPIC": True,
@@ -43,7 +43,7 @@ class chica2tlm_tests(ConanFile):
         self.requires(f"systemc/{self.systemc_version}")
         self.requires(f"gtest/{self.gtest_version}")
         self.requires(f"spdlog/{self.spdlog_version}")
-        self.requires(f"chica2tlm/{self.chica2tlm_version}")
+        self.requires(f"ambachicast/{self.ambachicast_version}")
 
 
     def build_requirements(self):
@@ -71,5 +71,5 @@ class chica2tlm_tests(ConanFile):
 
     def test(self):
         if can_run(self):
-            cmd = os.path.join(self.cpp.build.bindir, "chica2tlm_tests")
+            cmd = os.path.join(self.cpp.build.bindir, "ambachicast_tests")
             self.run(cmd, env="conanrun")
