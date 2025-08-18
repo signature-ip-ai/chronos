@@ -7,11 +7,11 @@ from conan import ConanFile
 from conan.tools.cmake import CMake, cmake_layout, CMakeDeps, CMakeToolchain
 
 
-class chica2tlm(ConanFile):
-    name = "chica2tlm"
+class ambachicast(ConanFile):
+    name = "ambachicast"
     version = "1.0"
-    systemc_version = "2.3.4"
-    spdlog_version = "1.15.1"
+    systemc_version = "3.0.1"
+    spdlog_version = "1.15.3"
     cmake_version = "3.31.6"
 
     # Optional metadata
@@ -100,3 +100,5 @@ class chica2tlm(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = [f"{self.name}"]
+        self.cpp_info.includedirs = ["include"]
+        self.cpp_info.libdirs = ["lib"]
