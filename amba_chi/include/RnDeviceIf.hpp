@@ -4,18 +4,16 @@
 #include <systemc>
 #include "BusWidthDefinitions.hpp"
 
-struct RnDeviceIf
+SC_MODULE(RnDeviceIf)
 {
+public:
     using reqflit_t = sc_dt::sc_bv<REQFLIT_WIDTH>;
     using rspflit_t = sc_dt::sc_bv<RSPFLIT_WIDTH>;
     using datflit_t = sc_dt::sc_bv<DATFLIT_WIDTH>;
     using snpflit_t = sc_dt::sc_bv<SNPFLIT_WIDTH>;
 
-    RnDeviceIf() = default;
-    RnDeviceIf(const RnDeviceIf&) = delete;
-    RnDeviceIf& operator = (const RnDeviceIf&) = delete;
-    RnDeviceIf(RnDeviceIf&&) = delete;
-    RnDeviceIf& operator = (RnDeviceIf&&) = delete;
+    SC_HAS_PROCESS(RnIfxAdapter);
+    RnDeviceIf(sc_core::sc_module_name);
 
     // Reset and Clocking will be provided by the adapter
     sc_core::sc_out<bool> intfrx_clk;

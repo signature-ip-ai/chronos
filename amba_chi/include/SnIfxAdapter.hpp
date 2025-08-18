@@ -1,5 +1,5 @@
-#ifndef __SN_ADAPTER__
-#define __SN_ADAPTER__
+#ifndef __SN_IFX_ADAPTER__
+#define __SN_IFX_ADAPTER__
 
 #include <memory>
 #include <systemc>
@@ -16,4 +16,4 @@ public:
     std::shared_ptr<SnDeviceIf> sn_dev_if;
 };
 
-#endif  // __SN_ADAPTER__
+#endif  // __SN_IFX_ADAPTER__
