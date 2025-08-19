@@ -1,15 +1,16 @@
-#ifndef __RN_NOC_TLM_IF__
-#define __RN_NOC_TLM_IF__
+#ifndef __RN_NOC_TLM_IF_HPP__
+#define __RN_NOC_TLM_IF_HPP__
 
 #include <systemc>
 #include <tlm>
 #include <tlm_utils/simple_target_socket.h>
 
-SC_MODULE(RnNocTlmIf)
+template<class RnIfxAdapter_t>
+class RnNocTlmIf : public sc_core::sc_module
 {
 public:
-    static constexpr auto BUS_WIDTH = 32u;
-    using TYPES = tlm::tlm_base_protocol_types;
+    static constexpr auto BUS_WIDTH = RnIfxAdapter_t::BUS_WIDTH;
+    using TYPES = typename RnIfxAdapter_t::TYPES;
 
     SC_HAS_PROCESS(RnNocTlmIf);
     RnNocTlmIf(sc_core::sc_module_name);
@@ -23,4 +24,4 @@ protected:
     unsigned int transport_dbg(tlm::tlm_generic_payload&);
 };
 
-#endif  // __RN_NOC_TLM_IF__
+#endif  // __RN_NOC_TLM_IF_HPP__

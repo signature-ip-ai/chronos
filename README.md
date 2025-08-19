@@ -75,16 +75,16 @@ $conan config show core.cache:storage_path
 core.cache:storage_path: [your preferred cache storage path]
 ```
 
-<!-- ## Building the libraries
-After cloning the repository, go to "software-models" directory and run _**conan install**_.
+## Building the libraries and running tests
+After cloning the repository, go inside "chronos/amba_chi" directory and run _**conan install**_.
 
 ```
-$ cd software-models
+$ cd chronos/amba_chi
 $ conan install . --build missing
 ```
 
-To build the executable
+To build the executable and run tests
 
 ```
-$ conan build .
-``` -->
+$ conan build . && conan export-pkg .
+```

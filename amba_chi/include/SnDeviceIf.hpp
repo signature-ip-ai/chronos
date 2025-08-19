@@ -1,20 +1,18 @@
-#ifndef __SN_DEVICE_IF__
-#define __SN_DEVICE_IF__
+#ifndef __SN_DEVICE_IF_HPP__
+#define __SN_DEVICE_IF_HPP__
 
 #include <systemc>
-#include "BusWidthDefinitions.hpp"
 
-struct SnDeviceIf
+template<class SnIfxAdapter_t>
+class SnDeviceIf : public sc_core::sc_module
 {
-    using reqflit_t = sc_dt::sc_bv<REQFLIT_WIDTH>;
-    using rspflit_t = sc_dt::sc_bv<RSPFLIT_WIDTH>;
-    using datflit_t = sc_dt::sc_bv<DATFLIT_WIDTH>;
+public:
+    using reqflit_t = typename SnIfxAdapter_t::reqflit_t;
+    using rspflit_t = typename SnIfxAdapter_t::rspflit_t;
+    using datflit_t = typename SnIfxAdapter_t::datflit_t;
 
-    SnDeviceIf() = default;
-    SnDeviceIf(const SnDeviceIf&) = delete;
-    SnDeviceIf& operator = (const SnDeviceIf&) = delete;
-    SnDeviceIf(SnDeviceIf&&) = delete;
-    SnDeviceIf& operator = (SnDeviceIf&&) = delete;
+    SC_HAS_PROCESS(SnDeviceIf);
+    SnDeviceIf(sc_core::sc_module_name);
 
     // Reset and Clocking will be provided by the adapter
     sc_core::sc_out<bool> intfrx_clk;
@@ -44,4 +42,4 @@ struct SnDeviceIf
     sc_core::sc_in<datflit_t> TX_DATFLIT;
 };
 
-#endif  // __SN_DEVICE_IF__
+#endif  // __SN_DEVICE_IF_HPP__
