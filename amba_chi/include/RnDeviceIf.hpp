@@ -1,18 +1,19 @@
-#ifndef __RN_DEVICE_IF__
-#define __RN_DEVICE_IF__
+#ifndef __RN_DEVICE_IF_HPP__
+#define __RN_DEVICE_IF_HPP__
 
+#include <type_traits>
 #include <systemc>
-#include "BusWidthDefinitions.hpp"
 
-SC_MODULE(RnDeviceIf)
+template<class RnIfxAdapter_t>
+class RnDeviceIf : public sc_core::sc_module
 {
 public:
-    using reqflit_t = sc_dt::sc_bv<REQFLIT_WIDTH>;
-    using rspflit_t = sc_dt::sc_bv<RSPFLIT_WIDTH>;
-    using datflit_t = sc_dt::sc_bv<DATFLIT_WIDTH>;
-    using snpflit_t = sc_dt::sc_bv<SNPFLIT_WIDTH>;
+    using reqflit_t = typename RnIfxAdapter_t::reqflit_t;
+    using rspflit_t = typename RnIfxAdapter_t::rspflit_t;
+    using datflit_t = typename RnIfxAdapter_t::datflit_t;
+    using snpflit_t = typename RnIfxAdapter_t::snpflit_t;
 
-    SC_HAS_PROCESS(RnIfxAdapter);
+    SC_HAS_PROCESS(RnDeviceIf);
     RnDeviceIf(sc_core::sc_module_name);
 
     // Reset and Clocking will be provided by the adapter
@@ -53,4 +54,4 @@ public:
     sc_core::sc_in<datflit_t> TX_DATFLIT;
 };
 
-#endif  // __RN_DEVICE_IF__
+#endif  // __RN_DEVICE_IF_HPP__

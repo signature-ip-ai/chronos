@@ -37,7 +37,7 @@ class ambachicast(ConanFile):
         f"systemc/{systemc_version}:shared": False,
         f"systemc/{systemc_version}:enable_pthreads": False,
         f"systemc/{systemc_version}:enable_assertions": True,
-        f"systemc/{systemc_version}:disable_virtual_bind": False,
+        f"systemc/{systemc_version}:disable_virtual_bind": True,
         f"systemc/{systemc_version}:disable_async_updates": False,
         f"systemc/{systemc_version}:disable_copyright_msg": True,
         f"systemc/{systemc_version}:enable_phase_callbacks": True,
