@@ -1,0 +1,47 @@
+#include <RnIfxAdapter.hpp>
+
+#include <memory>
+#include <string>
+#include <RnDeviceIf.hxx>
+#include <RnNocTlmIf.hxx>
+
+RnIfxAdapter::RnIfxAdapter(sc_core::sc_module_name name)
+    : sc_core::sc_module(name)
+    , rn_dev_if(std::make_shared<RnDeviceIf<RnIfxAdapter>>("RnDeviceIf0"))
+    , rn_tlm_if(std::make_shared<RnNocTlmIf<RnIfxAdapter>>("RnNocTlmIf0"))
+    , target_socket(rn_tlm_if->target_socket)
+    , intfrx_clk(rn_dev_if->intfrx_clk)
+    , rstb_intfrx_clk(rn_dev_if->rstb_intfrx_clk)
+    , TX_LINKACTIVEREQ(rn_dev_if->TX_LINKACTIVEREQ)
+    , TX_LINKACTIVEACK(rn_dev_if->TX_LINKACTIVEACK)
+    , RX_REQFLITPEND(rn_dev_if->RX_REQFLITPEND)
+    , RX_REQFLITV(rn_dev_if->RX_REQFLITV)
+    , RX_REQLCRDV(rn_dev_if->RX_REQLCRDV)
+    , RX_RSPFLITPEND(rn_dev_if->RX_RSPFLITPEND)
+    , RX_RSPFLITV(rn_dev_if->RX_RSPFLITV)
+    , RX_RSPLCRDV(rn_dev_if->RX_RSPLCRDV)
+    , RX_DATFLITPEND(rn_dev_if->RX_DATFLITPEND)
+    , RX_DATFLITV(rn_dev_if->RX_DATFLITV)
+    , RX_DATLCRDV(rn_dev_if->RX_DATLCRDV)
+    , RX_LINKACTIVEREQ(rn_dev_if->RX_LINKACTIVEREQ)
+    , RX_LINKACTIVEACK(rn_dev_if->RX_LINKACTIVEACK)
+    , TX_SNPFLITPEND(rn_dev_if->TX_SNPFLITPEND)
+    , TX_SNPFLITV(rn_dev_if->TX_SNPFLITV)
+    , TX_SNPLCRDV(rn_dev_if->TX_SNPLCRDV)
+    , TX_RSPFLITPEND(rn_dev_if->TX_RSPFLITPEND)
+    , TX_RSPFLITV(rn_dev_if->TX_RSPFLITV)
+    , TX_RSPLCRDV(rn_dev_if->TX_RSPLCRDV)
+    , TX_DATFLITPEND(rn_dev_if->TX_DATFLITPEND)
+    , TX_DATFLITV(rn_dev_if->TX_DATFLITV)
+    , TX_DATLCRDV(rn_dev_if->TX_DATLCRDV)
+    , TXSACTIVE(rn_dev_if->TXSACTIVE)
+    , RXSACTIVE(rn_dev_if->RXSACTIVE)
+    , SYSCOREQ(rn_dev_if->SYSCOREQ)
+    , SYSCOACK(rn_dev_if->SYSCOACK)
+    , RX_REQFLIT(rn_dev_if->RX_REQFLIT)
+    , RX_RSPFLIT(rn_dev_if->RX_RSPFLIT)
+    , RX_DATFLIT(rn_dev_if->RX_DATFLIT)
+    , TX_SNPFLIT(rn_dev_if->TX_SNPFLIT)
+    , TX_RSPFLIT(rn_dev_if->TX_RSPFLIT)
+    , TX_DATFLIT(rn_dev_if->TX_DATFLIT)
+{}
