@@ -22,6 +22,11 @@ target_link_libraries(${PROJECT_NAME} SystemC::systemc spdlog::spdlog)
 
 
 ########## Install Package Library
-file(GLOB_RECURSE TARGET_LIBRARY_HEADERS include/RnIfxAdapter.h include/SnIfxAdapter.h)
+file(GLOB_RECURSE TARGET_LIBRARY_HEADERS
+    include/RnIfxAdapter.h
+    include/SnIfxAdapter.h
+    include/chi_enums.h
+    include/chi_tlm_extension.h)
+
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS BASE_DIRS include FILES ${TARGET_LIBRARY_HEADERS})
 install(TARGETS ${PROJECT_NAME} FILE_SET HEADERS)
