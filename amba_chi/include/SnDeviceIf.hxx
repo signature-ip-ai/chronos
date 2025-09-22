@@ -1,11 +1,11 @@
 #ifndef __SN_DEVICE_IF_HXX__
 #define __SN_DEVICE_IF_HXX__
 
-#include <SnDeviceIf.hpp>
+#include <SnDeviceIf.h>
 
 #include <type_traits>
 #include <systemc>
-#include <SnIfxAdapter.hpp>
+#include <SnIfxAdapter.h>
 
 template<class SnIfxAdapter_t>
 SnDeviceIf<SnIfxAdapter_t>::SnDeviceIf(sc_core::sc_module_name name)

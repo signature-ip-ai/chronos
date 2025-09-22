@@ -1,4 +1,4 @@
-#include <RnIfxAdapter.hpp>
+#include <RnIfxAdapter.h>
 
 #include <memory>
 #include <string>
