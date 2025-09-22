@@ -1,11 +1,11 @@
 #ifndef __RN_DEVICE_IF_HXX__
 #define __RN_DEVICE_IF_HXX__
 
-#include <RnDeviceIf.hpp>
+#include <RnDeviceIf.h>
 
 #include <type_traits>
 #include <systemc>
-#include <RnIfxAdapter.hpp>
+#include <RnIfxAdapter.h>
 
 template<class RnIfxAdapter_t>
 RnDeviceIf<RnIfxAdapter_t>::RnDeviceIf(sc_core::sc_module_name name)

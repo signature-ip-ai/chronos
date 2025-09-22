@@ -1,11 +1,11 @@
 #ifndef __RN_NOC_TLM_IF_HXX__
 #define __RN_NOC_TLM_IF_HXX__
 
-#include <RnNocTlmIf.hpp>
+#include <RnNocTlmIf.h>
 
 #include <type_traits>
 #include <systemc>
-#include <RnIfxAdapter.hpp>
+#include <RnIfxAdapter.h>
 
 template<class RnIfxAdapter_t>
 RnNocTlmIf<RnIfxAdapter_t>::RnNocTlmIf(sc_core::sc_module_name name)

@@ -1,11 +1,11 @@
 #ifndef __SN_NOC_TLM_IF_HXX__
 #define __SN_NOC_TLM_IF_HXX__
 
-#include <SnNocTlmIf.hpp>
+#include <SnNocTlmIf.h>
 
 #include <type_traits>
 #include <systemc>
-#include <SnIfxAdapter.hpp>
+#include <SnIfxAdapter.h>
 
 template<class SnIfxAdapter_t>
 SnNocTlmIf<SnIfxAdapter_t>::SnNocTlmIf(sc_core::sc_module_name name)

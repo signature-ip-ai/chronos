@@ -2,8 +2,8 @@
 #include <spdlog/spdlog.h>
 #include <systemc>
 
-#include <RnIfxAdapter.hpp>
-#include <SnIfxAdapter.hpp>
+#include <RnIfxAdapter.h>
+#include <SnIfxAdapter.h>
 
 TEST(ElaborationTests, ElaborateRnIfxAdapter)
 {

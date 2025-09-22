@@ -1,4 +1,4 @@
-#include <SnIfxAdapter.hpp>
+#include <SnIfxAdapter.h>
 
 #include <memory>
 #include <systemc>
