@@ -71,5 +71,8 @@ class amabchicast_tests(ConanFile):
 
     def test(self):
         if can_run(self):
-            cmd = os.path.join(self.cpp.build.bindir, "ambachicast_tests")
+            cmd = os.path.join(self.cpp.build.bindir, "RnIfxAdapterTests")
+            self.run(cmd, env="conanrun")
+
+            cmd = os.path.join(self.cpp.build.bindir, "SnIfxAdapterTests")
             self.run(cmd, env="conanrun")
