@@ -1,3 +1,4 @@
+#include <systemc>
 #include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
 

@@ -12,27 +12,42 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CUSTOM_CXX_FLAGS -Wall -Werror -Wno-format)
 
-########## Main Executable
-file(GLOB AMBACHICAST_TESTS_SOURCES src/*.cpp)
+########## RnIfxAdapterTests Executable
+file(GLOB RNIFXADAPTER_TESTS_SOURCES src/RnIfxAdapterTests.cpp src/ambachicast_tests.cpp)
 
-add_executable(${PROJECT_NAME} ${AMBACHICAST_TESTS_SOURCES})
+add_executable(RnIfxAdapterTests ${RNIFXADAPTER_TESTS_SOURCES})
 
 get_target_property(SYSTEMC_INCLUDE_DIRS SystemC::systemc INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(GTEST_INCLUDE_DIRS GTest::gtest INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(AMBACHICAST_INCLUDE_DIRS ambachicast::ambachicast INTERFACE_INCLUDE_DIRECTORIES)
 
-target_include_directories(${PROJECT_NAME} PUBLIC
+target_include_directories(RnIfxAdapterTests PUBLIC
     include
     ${SYSTEMC_INCLUDE_DIRS}
     ${SPDLOG_INCLUDE_DIRS}
     ${GTEST_INCLUDE_DIRS}
     ${AMBACHICAST_INCLUDE_DIRS})
 
-target_compile_options(${PROJECT_NAME} PRIVATE ${CUSTOM_CXX_FLAGS})
+target_compile_options(RnIfxAdapterTests PRIVATE ${CUSTOM_CXX_FLAGS})
+target_link_libraries(RnIfxAdapterTests SystemC::systemc spdlog::spdlog ambachicast::ambachicast gtest::gtest)
 
-target_link_libraries(${PROJECT_NAME}
-    SystemC::systemc
-    spdlog::spdlog
-    ambachicast::ambachicast
-    gtest::gtest)
+########## SnIfxAdapterTests Executable
+file(GLOB SNIFXADAPTER_TESTS_SOURCES src/SnIfxAdapterTests.cpp src/ambachicast_tests.cpp)
+
+add_executable(SnIfxAdapterTests ${SNIFXADAPTER_TESTS_SOURCES})
+
+get_target_property(SYSTEMC_INCLUDE_DIRS SystemC::systemc INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(GTEST_INCLUDE_DIRS GTest::gtest INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(AMBACHICAST_INCLUDE_DIRS ambachicast::ambachicast INTERFACE_INCLUDE_DIRECTORIES)
+
+target_include_directories(SnIfxAdapterTests PUBLIC
+    include
+    ${SYSTEMC_INCLUDE_DIRS}
+    ${SPDLOG_INCLUDE_DIRS}
+    ${GTEST_INCLUDE_DIRS}
+    ${AMBACHICAST_INCLUDE_DIRS})
+
+target_compile_options(SnIfxAdapterTests PRIVATE ${CUSTOM_CXX_FLAGS})
+target_link_libraries(SnIfxAdapterTests SystemC::systemc spdlog::spdlog ambachicast::ambachicast gtest::gtest)

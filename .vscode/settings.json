@@ -89,6 +89,7 @@
     "C_Cpp.default.cStandard": "c17",
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/amba_chi/include",
+        "${workspaceFolder}/amba_chi/test_package/include",
         "/scratch/users/${env:USER}/.conan2/**"
     ],
     "C_Cpp.default.recursiveIncludes.order": "depthFirst",
