@@ -25,31 +25,31 @@ public:
     tlm_utils::simple_initiator_socket<SnIfxAdapter, BUS_WIDTH, TYPES> initiator_socket;
 
     // Reset and Clocking will be provided by the adapter
-    sc_core::sc_out<bool> intfrx_clk;
-    sc_core::sc_out<bool> rstb_intfrx_clk;
+    sc_core::sc_signal<bool> intfrx_clk_out;
+    sc_core::sc_signal<bool> rstb_intfrx_clk_out;
 
-    sc_core::sc_out<bool> RX_LINKACTIVEREQ;
-    sc_core::sc_in<bool> RX_LINKACTIVEACK;
-    sc_core::sc_out<bool> RX_RSPFLITPEND;
-    sc_core::sc_out<bool> RX_RSPFLITV;
-    sc_core::sc_in<bool> RX_RSPLCRDV;
-    sc_core::sc_out<bool> RX_DATFLITPEND;
-    sc_core::sc_out<bool> RX_DATFLITV;
-    sc_core::sc_in<bool> RX_DATLCRDV;
-    sc_core::sc_in<bool> TX_LINKACTIVEREQ;
-    sc_core::sc_out<bool> TX_LINKACTIVEACK;
-    sc_core::sc_in<bool> TX_REQFLITPEND;
-    sc_core::sc_in<bool> TX_REQFLITV;
-    sc_core::sc_out<bool> TX_REQLCRDV;
-    sc_core::sc_in<bool> TX_DATFLITPEND;
-    sc_core::sc_in<bool> TX_DATFLITV;
-    sc_core::sc_out<bool> TX_DATLCRDV;
-    sc_core::sc_in<bool> TXSACTIVE;
-    sc_core::sc_out<bool> RXSACTIVE;
-    sc_core::sc_out<rspflit_t> RX_RSPFLIT;
-    sc_core::sc_out<datflit_t> RX_DATFLIT;
-    sc_core::sc_in<reqflit_t> TX_REQFLIT;
-    sc_core::sc_in<datflit_t> TX_DATFLIT;
+    sc_core::sc_signal<bool> RX_LINKACTIVEREQ_out;
+    sc_core::sc_signal<bool> RX_LINKACTIVEACK_in;
+    sc_core::sc_signal<bool> RX_RSPFLITPEND_out;
+    sc_core::sc_signal<bool> RX_RSPFLITV_out;
+    sc_core::sc_signal<bool> RX_RSPLCRDV_in;
+    sc_core::sc_signal<bool> RX_DATFLITPEND_out;
+    sc_core::sc_signal<bool> RX_DATFLITV_out;
+    sc_core::sc_signal<bool> RX_DATLCRDV_in;
+    sc_core::sc_signal<bool> TX_LINKACTIVEREQ_in;
+    sc_core::sc_signal<bool> TX_LINKACTIVEACK_out;
+    sc_core::sc_signal<bool> TX_REQFLITPEND_in;
+    sc_core::sc_signal<bool> TX_REQFLITV_in;
+    sc_core::sc_signal<bool> TX_REQLCRDV_out;
+    sc_core::sc_signal<bool> TX_DATFLITPEND_in;
+    sc_core::sc_signal<bool> TX_DATFLITV_in;
+    sc_core::sc_signal<bool> TX_DATLCRDV_out;
+    sc_core::sc_signal<bool> TXSACTIVE_in;
+    sc_core::sc_signal<bool> RXSACTIVE_out;
+    sc_core::sc_signal<rspflit_t> RX_RSPFLIT_out;
+    sc_core::sc_signal<datflit_t> RX_DATFLIT_out;
+    sc_core::sc_signal<reqflit_t> TX_REQFLIT_in;
+    sc_core::sc_signal<datflit_t> TX_DATFLIT_in;
 
 private:
     tlm::tlm_sync_enum nb_transport_bw(tlm::tlm_generic_payload&, tlm::tlm_phase&, sc_core::sc_time&);
