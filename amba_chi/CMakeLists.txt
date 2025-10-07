@@ -25,6 +25,9 @@ target_link_libraries(${PROJECT_NAME} SystemC::systemc spdlog::spdlog)
 file(GLOB_RECURSE TARGET_LIBRARY_HEADERS
     include/RnIfxAdapter.h
     include/SnIfxAdapter.h
+    include/ProgIfxAdapter.h
+    include/QpIfxAdapter.h
+    include/ClkResetIfx.h
     include/chi_enums.h
     include/chi_tlm_extension.h)
 
