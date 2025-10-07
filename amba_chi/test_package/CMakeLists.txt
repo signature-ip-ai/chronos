@@ -9,8 +9,7 @@ find_package(GTest CONFIG REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(CUSTOM_CXX_FLAGS -Wall -Werror -Wno-format)
+set(CUSTOM_CXX_FLAGS -Wall -Werror -Wno-format -O0 -g)
 
 ########## RnIfxAdapterTests Executable
 file(GLOB RNIFXADAPTER_TESTS_SOURCES src/RnIfxAdapterTests.cpp src/ambachicast_tests.cpp)
