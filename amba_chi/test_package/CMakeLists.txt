@@ -50,3 +50,24 @@ target_include_directories(SnIfxAdapterTests PUBLIC
 
 target_compile_options(SnIfxAdapterTests PRIVATE ${CUSTOM_CXX_FLAGS})
 target_link_libraries(SnIfxAdapterTests SystemC::systemc spdlog::spdlog ambachicast::ambachicast gtest::gtest)
+
+########## FlitTests Executable
+file(GLOB FLIT_TESTS_SOURCES src/FlitTests.cpp src/ambachicast_tests.cpp)
+
+add_executable(FlitTests ${FLIT_TESTS_SOURCES})
+
+get_target_property(SYSTEMC_INCLUDE_DIRS SystemC::systemc INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(GTEST_INCLUDE_DIRS GTest::gtest INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(AMBACHICAST_INCLUDE_DIRS ambachicast::ambachicast INTERFACE_INCLUDE_DIRECTORIES)
+
+target_include_directories(FlitTests PUBLIC
+    include
+    ../include
+    ${SYSTEMC_INCLUDE_DIRS}
+    ${SPDLOG_INCLUDE_DIRS}
+    ${GTEST_INCLUDE_DIRS}
+    ${AMBACHICAST_INCLUDE_DIRS})
+
+target_compile_options(FlitTests PRIVATE ${CUSTOM_CXX_FLAGS})
+target_link_libraries(FlitTests SystemC::systemc spdlog::spdlog ambachicast::ambachicast gtest::gtest)
