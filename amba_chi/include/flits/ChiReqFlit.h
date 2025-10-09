@@ -1,3 +1,75 @@
+/*
+ * CHI REQ Flit
+ *
+ * Field Enumeration and Widths:
+ * ============================
+ * | Field Name        | Width (bits) | Range     | Description                           |
+ * |-------------------|--------------|-----------|---------------------------------------|
+ * | qos               | 4            | 3:0       | Quality of Service                    |
+ * | tgtid             | 11           | 14:4      | Target Node ID                        |
+ * | srcid             | 11           | 25:15     | Source Node ID                        |
+ * | txnid             | 12           | 37:26     | Transaction ID                        |
+ * | field_4 (union)   | 11           | 48:38     | Union field with multiple views:      |
+ * |   - returnnid     | 11           | 48:38     |   Return Node ID (DMT)                |
+ * |   - stashnid      | 11           | 48:38     |   Stash Node ID (Stash transactions)  |
+ * |   - slcrephint    | 7            | 44:38     |   SLC Replacement Hint (padded)       |
+ * | field_5 (union)   | 1            | 49:49     | Union field with multiple views:      |
+ * |   - stashnidvalid | 1            | 49:49     |   Stash Node ID Valid (Stash)         |
+ * |   - endian        | 1            | 49:49     |   Endian (Atomic transactions)        |
+ * |   - deep          | 1            | 49:49     |   Deep (CleanSharedPersist*)          |
+ * | field_6 (union)   | 12           | 61:50     | Union field with multiple views:      |
+ * |   - returntxnid   | 12           | 61:50     |   Return Transaction ID (DMT)         |
+ * |   - stashlpid     | 5            | 54:50     |   Stash LPID (with valid bit)         |
+ * |   - stashlpidvalid| 1            | 55:55     |   Stash LPID Valid                    |
+ * | opcode            | 7            | 68:62     | REQ Operation Code                    |
+ * | size              | 3            | 71:69     | Transfer Size                         |
+ * | addr              | 52           | 123:72    | Address (REQ_ADDR_WIDTH)              |
+ * | ns                | 1            | 124:124   | Non-Secure                            |
+ * | likelyshared      | 1            | 125:125   | Likely Shared                         |
+ * | allowretry        | 1            | 126:126   | Allow Retry                           |
+ * | order             | 2            | 128:127   | Ordering Requirements                 |
+ * | pcrdtype          | 4            | 132:129   | Protocol Credit Type                  |
+ * | memattr           | 4            | 136:133   | Memory Attributes                     |
+ * | field_16 (union)  | 1            | 137:137   | Union field with multiple views:      |
+ * |   - snpattr       | 1            | 137:137   |   Snoop Attribute                     |
+ * |   - dodwt         | 1            | 137:137   |   Do DWT                              |
+ * | field_17 (union)  | 8            | 145:138   | Union field with multiple views:      |
+ * |   - lpid          | 5            | 142:138   |   LPID (with 3-bit pad)               |
+ * |   - pgroupid      | 8            | 145:138   |   P Group ID (Persistent CMO)         |
+ * |   - stashgroupid  | 8            | 145:138   |   Stash Group ID (StashOnceSep)       |
+ * |   - taggroupid    | 8            | 145:138   |   Tag Group ID (Memory Tagging)       |
+ * | field_18 (union)  | 1            | 146:146   | Union field with multiple views:      |
+ * |   - excl          | 1            | 146:146   |   Exclusive (Exclusive transactions)  |
+ * |   - snoopme       | 1            | 146:146   |   Snoop Me (Atomic transactions)      |
+ * | expcompack        | 1            | 147:147   | Expect Completion Acknowledge         |
+ * | tagop             | 2            | 149:148   | Tag Operation                         |
+ * | tracetag          | 1            | 150:150   | Trace Tag                             |
+ * |-------------------|--------------|-----------|---------------------------------------|
+ * | Total Flit Width: | 151 bits     |           |                                       |
+ *
+ * Field Breakdown by Size:
+ * - 1-bit fields:  ns, likelyshared, allowretry, snpattr, dodwt, excl, snoopme,
+ *                   expcompack, tracetag, stashnidvalid, endian, deep, stashlpidvalid (13 fields)
+ * - 2-bit fields:  order, tagop (2 fields)
+ * - 3-bit fields:  size (1 field)
+ * - 4-bit fields:  qos, pcrdtype, memattr (3 fields)
+ * - 5-bit fields:  stashlpid, lpid (2 fields)
+ * - 7-bit fields:  opcode, slcrephint (2 fields)
+ * - 8-bit fields:  pgroupid, stashgroupid, taggroupid (3 fields)
+ * - 11-bit fields: tgtid, srcid, returnnid, stashnid (4 fields)
+ * - 12-bit fields: txnid, returntxnid (2 fields)
+ * - 52-bit fields: addr (1 field)
+ *
+ * Note: The union fields allow the same bits to be interpreted in different
+ *       ways depending on the context of the REQ transaction:
+ *       - field_4: returnnid for DMT, stashnid for Stash, slcrephint for cache replacement
+ *       - field_5: stashnidvalid for Stash, endian for Atomic, deep for CleanSharedPersist*
+ *       - field_6: returntxnid for DMT, stashlpid/stashlpidvalid for Stash
+ *       - field_16: snpattr for general use, dodwt for DWT
+ *       - field_17: lpid for general use, *groupid for specific contexts
+ *       - field_18: excl for Exclusive, snoopme for Atomic transactions
+ */
+
 #ifndef __CHI_REQ_FLIT_H__
 #define __CHI_REQ_FLIT_H__
 

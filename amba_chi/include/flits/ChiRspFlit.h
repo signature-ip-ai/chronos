@@ -1,3 +1,48 @@
+/*
+ * CHI RSP Flit
+ *
+ * Field Enumeration and Widths:
+ * ============================
+ * | Field Name        | Width (bits) | Range   | Description                           |
+ * |-------------------|--------------|---------|---------------------------------------|
+ * | qos               | 4            | 3:0     | Quality of Service                    |
+ * | tgtid             | 11           | 14:4    | Target Node ID                        |
+ * | srcid             | 11           | 25:15   | Source Node ID                        |
+ * | txnid             | 12           | 37:26   | Transaction ID                        |
+ * | opcode            | 5            | 42:38   | RSP Operation Code                    |
+ * | resperr           | 2            | 44:43   | Response Error                        |
+ * | resp              | 3            | 47:45   | Response                              |
+ * | field_7 (union)   | 3            | 50:48   | Union field with multiple views:      |
+ * |   - datapull      | 3            | 50:48   |   Data Pull (Stash transactions)      |
+ * |   - fwdstate      | 3            | 50:48   |   Forward State (DCT)                 |
+ * | cbusy             | 3            | 53:51   | Completer Busy                        |
+ * | field_9 (union)   | 12           | 65:54   | Union field with multiple views:      |
+ * |   - dbid          | 12           | 65:54   |   Data Buffer ID                      |
+ * |   - taggroupid    | 8            | 61:54   |   Tag Group ID (Memory Tagging)       |
+ * |   - stashgroupid  | 8            | 61:54   |   Stash Group ID (Stash transactions) |
+ * |   - pgroupid      | 8            | 61:54   |   P Group ID (Persistent CMO)         |
+ * | pcrdtype          | 4            | 69:66   | Protocol Credit Type                  |
+ * | tagop             | 2            | 71:70   | Tag Operation                         |
+ * | tracetag          | 1            | 72:72   | Trace Tag                             |
+ * |-------------------|--------------|---------|---------------------------------------|
+ * | Total Flit Width: | 73 bits      |         |                                       |
+ *
+ * Field Breakdown by Size:
+ * - 1-bit fields:  tracetag (1 field)
+ * - 2-bit fields:  resperr, tagop (2 fields)
+ * - 3-bit fields:  resp, datapull, fwdstate, cbusy (4 fields)
+ * - 4-bit fields:  qos, pcrdtype (2 fields)
+ * - 5-bit fields:  opcode (1 field)
+ * - 8-bit fields:  taggroupid, stashgroupid, pgroupid (3 fields)
+ * - 11-bit fields: tgtid, srcid (2 fields)
+ * - 12-bit fields: txnid, dbid, field_9 union (3 fields)
+ *
+ * Note: The union fields allow the same bits to be interpreted in different
+ *       ways depending on the context of the RSP transaction:
+ *       - field_7: datapull for Stash, fwdstate for DCT
+ *       - field_9: dbid for general use, *groupid for specific contexts
+ */
+
 #ifndef __CHI_RSP_FLIT_H__
 #define __CHI_RSP_FLIT_H__
 
