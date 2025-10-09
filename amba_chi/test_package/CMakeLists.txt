@@ -52,7 +52,7 @@ target_compile_options(SnIfxAdapterTests PRIVATE ${CUSTOM_CXX_FLAGS})
 target_link_libraries(SnIfxAdapterTests SystemC::systemc spdlog::spdlog ambachicast::ambachicast gtest::gtest)
 
 ########## FlitTests Executable
-file(GLOB FLIT_TESTS_SOURCES src/FlitTests.cpp src/ambachicast_tests.cpp)
+file(GLOB FLIT_TESTS_SOURCES src/ChiReqFlitTests.cpp src/ChiDatFlitTests.cpp src/ambachicast_tests.cpp)
 
 add_executable(FlitTests ${FLIT_TESTS_SOURCES})
 

@@ -5,112 +5,112 @@
 #include <flits/ChiReqFlit.h>
 
 
-TEST(FlitTests, Test_qos)
+TEST(ChiReqFlitTests, Test_qos)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_qos(4);
     EXPECT_EQ(4, req_flit.get_qos());
 }
 
-TEST(FlitTests, Test_tgtid)
+TEST(ChiReqFlitTests, Test_tgtid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_tgtid(1024);
     EXPECT_EQ(1024, req_flit.get_tgtid());
 }
 
-TEST(FlitTests, Test_srcid)
+TEST(ChiReqFlitTests, Test_srcid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_srcid(512);
     EXPECT_EQ(512, req_flit.get_srcid());
 }
 
-TEST(FlitTests, Test_txnid)
+TEST(ChiReqFlitTests, Test_txnid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_txnid(2048);
     EXPECT_EQ(2048, req_flit.get_txnid());
 }
 
-TEST(FlitTests, Test_stashnid)
+TEST(ChiReqFlitTests, Test_stashnid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_stashnid(256);
     EXPECT_EQ(256, req_flit.get_stashnid());
 }
 
-TEST(FlitTests, Test_returnnid)
+TEST(ChiReqFlitTests, Test_returnnid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_returnnid(128);
     EXPECT_EQ(128, req_flit.get_returnnid());
 }
 
-TEST(FlitTests, Test_slcrephint)
+TEST(ChiReqFlitTests, Test_slcrephint)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_slcrephint(64);
     EXPECT_EQ(64, req_flit.get_slcrephint());
 }
 
-TEST(FlitTests, Test_deep)
+TEST(ChiReqFlitTests, Test_deep)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_deep(1);
     EXPECT_EQ(1, req_flit.get_deep());
 }
 
-TEST(FlitTests, Test_endian)
+TEST(ChiReqFlitTests, Test_endian)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_endian(1);
     EXPECT_EQ(1, req_flit.get_endian());
 }
 
-TEST(FlitTests, Test_stashnidvalid)
+TEST(ChiReqFlitTests, Test_stashnidvalid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_stashnidvalid(1);
     EXPECT_EQ(1, req_flit.get_stashnidvalid());
 }
 
-TEST(FlitTests, Test_returntxnid)
+TEST(ChiReqFlitTests, Test_returntxnid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_returntxnid(1536);
     EXPECT_EQ(1536, req_flit.get_returntxnid());
 }
 
-TEST(FlitTests, Test_stashlpidvalid)
+TEST(ChiReqFlitTests, Test_stashlpidvalid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_stashlpidvalid(1);
     EXPECT_EQ(1, req_flit.get_stashlpidvalid());
 }
 
-TEST(FlitTests, Test_stashlpid)
+TEST(ChiReqFlitTests, Test_stashlpid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_stashlpid(16);
     EXPECT_EQ(16, req_flit.get_stashlpid());
 }
 
-TEST(FlitTests, Test_opcode)
+TEST(ChiReqFlitTests, Test_opcode)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_opcode(32);
     EXPECT_EQ(32, req_flit.get_opcode());
 }
 
-TEST(FlitTests, Test_size)
+TEST(ChiReqFlitTests, Test_size)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_size(4);
     EXPECT_EQ(4, req_flit.get_size());
 }
 
-TEST(FlitTests, Test_addr)
+TEST(ChiReqFlitTests, Test_addr)
 {
     flits::ChiReqFlit req_flit;
     sc_dt::sc_uint<52> test_addr = 0x123456789ABC;
@@ -118,126 +118,126 @@ TEST(FlitTests, Test_addr)
     EXPECT_EQ(test_addr, req_flit.get_addr());
 }
 
-TEST(FlitTests, Test_ns)
+TEST(ChiReqFlitTests, Test_ns)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_ns(1);
     EXPECT_EQ(1, req_flit.get_ns());
 }
 
-TEST(FlitTests, Test_likelyshared)
+TEST(ChiReqFlitTests, Test_likelyshared)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_likelyshared(1);
     EXPECT_EQ(1, req_flit.get_likelyshared());
 }
 
-TEST(FlitTests, Test_allowretry)
+TEST(ChiReqFlitTests, Test_allowretry)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_allowretry(1);
     EXPECT_EQ(1, req_flit.get_allowretry());
 }
 
-TEST(FlitTests, Test_order)
+TEST(ChiReqFlitTests, Test_order)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_order(2);
     EXPECT_EQ(2, req_flit.get_order());
 }
 
-TEST(FlitTests, Test_pcrdtype)
+TEST(ChiReqFlitTests, Test_pcrdtype)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_pcrdtype(8);
     EXPECT_EQ(8, req_flit.get_pcrdtype());
 }
 
-TEST(FlitTests, Test_memattr)
+TEST(ChiReqFlitTests, Test_memattr)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_memattr(12);
     EXPECT_EQ(12, req_flit.get_memattr());
 }
 
-TEST(FlitTests, Test_dodwt)
+TEST(ChiReqFlitTests, Test_dodwt)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_dodwt(1);
     EXPECT_EQ(1, req_flit.get_dodwt());
 }
 
-TEST(FlitTests, Test_snpattr)
+TEST(ChiReqFlitTests, Test_snpattr)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_snpattr(1);
     EXPECT_EQ(1, req_flit.get_snpattr());
 }
 
-TEST(FlitTests, Test_taggroupid)
+TEST(ChiReqFlitTests, Test_taggroupid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_taggroupid(200);
     EXPECT_EQ(200, req_flit.get_taggroupid());
 }
 
-TEST(FlitTests, Test_stashgroupid)
+TEST(ChiReqFlitTests, Test_stashgroupid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_stashgroupid(150);
     EXPECT_EQ(150, req_flit.get_stashgroupid());
 }
 
-TEST(FlitTests, Test_pgroupid)
+TEST(ChiReqFlitTests, Test_pgroupid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_pgroupid(100);
     EXPECT_EQ(100, req_flit.get_pgroupid());
 }
 
-TEST(FlitTests, Test_lpid)
+TEST(ChiReqFlitTests, Test_lpid)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_lpid(20);
     EXPECT_EQ(20, req_flit.get_lpid());
 }
 
-TEST(FlitTests, Test_snoopme)
+TEST(ChiReqFlitTests, Test_snoopme)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_snoopme(1);
     EXPECT_EQ(1, req_flit.get_snoopme());
 }
 
-TEST(FlitTests, Test_excl)
+TEST(ChiReqFlitTests, Test_excl)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_excl(1);
     EXPECT_EQ(1, req_flit.get_excl());
 }
 
-TEST(FlitTests, Test_expcompack)
+TEST(ChiReqFlitTests, Test_expcompack)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_expcompack(1);
     EXPECT_EQ(1, req_flit.get_expcompack());
 }
 
-TEST(FlitTests, Test_tagop)
+TEST(ChiReqFlitTests, Test_tagop)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_tagop(3);
     EXPECT_EQ(3, req_flit.get_tagop());
 }
 
-TEST(FlitTests, Test_tracetag)
+TEST(ChiReqFlitTests, Test_tracetag)
 {
     flits::ChiReqFlit req_flit;
     req_flit.set_tracetag(1);
     EXPECT_EQ(1, req_flit.get_tracetag());
 }
 
-TEST(FlitTests, Test_all_setters_with_get_raw)
+TEST(ChiReqFlitTests, Test_all_setters_with_get_raw)
 {
     flits::ChiReqFlit req_flit;
 
@@ -269,7 +269,7 @@ TEST(FlitTests, Test_all_setters_with_get_raw)
     EXPECT_EQ(expected_raw, req_flit.get_raw());
 }
 
-TEST(FlitTests, Test_set_raw_with_all_getters)
+TEST(ChiReqFlitTests, Test_set_raw_with_all_getters)
 {
     flits::ChiReqFlit req_flit;
 
