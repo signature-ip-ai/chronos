@@ -56,6 +56,7 @@ file(GLOB FLIT_TESTS_SOURCES
     src/flittests/ChiRspFlitTests.cpp
     src/flittests/ChiReqFlitTests.cpp
     src/flittests/ChiDatFlitTests.cpp
+    src/flittests/ChiSnpFlitTests.cpp
     src/ambachicast_tests.cpp)
 
 add_executable(FlitTests ${FLIT_TESTS_SOURCES})

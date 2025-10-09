@@ -1,3 +1,62 @@
+/*
+ * CHI DAT Flit
+ *
+ * Field Enumeration and Widths:
+ * ============================
+ * | Field Name        | Width (bits) | Range     | Description                           |
+ * |-------------------|--------------|-----------|---------------------------------------|
+ * | qos               | 4            | 3:0       | Quality of Service                    |
+ * | tgtid             | 11           | 14:4      | Target Node ID                        |
+ * | srcid             | 11           | 25:15     | Source Node ID                        |
+ * | txnid             | 12           | 37:26     | Transaction ID                        |
+ * | homenid           | 11           | 48:38     | Home Node ID                          |
+ * | opcode            | 4            | 52:49     | DAT Operation Code                    |
+ * | resperr           | 2            | 54:53     | Response Error                        |
+ * | resp              | 3            | 57:55     | Response                              |
+ * | field_8 (union)   | 4            | 61:58     | Union field with multiple views:      |
+ * |   - datasource    | 4            | 61:58     |   Data Source (indicates source)      |
+ * |   - fwdstate      | 3            | 60:58     |   Forward State (DCT, with 1-bit pad) |
+ * |   - datapull      | 3            | 60:58     |   Data Pull (Stash, with 1-bit pad)   |
+ * | cbusy             | 3            | 64:62     | Completer Busy                        |
+ * | dbid              | 12           | 76:65     | Data Buffer ID                        |
+ * | ccid              | 2            | 78:77     | Critical Chunk Identifier             |
+ * | dataid            | 2            | 80:79     | Data Identifier                       |
+ * | tagop             | 2            | 82:81     | Tag Operation                         |
+ * | tag               | 16           | 98:83     | Memory Tag (DW/32 = 4,8,16)           |
+ * | tu                | 4            | 102:99    | Tag Update (DW/128 = 1,2,4)           |
+ * | tracetag          | 1            | 103:103   | Trace Tag                             |
+ * | be                | 64           | 167:104   | Byte Enable (DW/8 = 16,32,64)         |
+ * | data              | 512          | 679:168   | Data Payload (DW = 128,256,512)       |
+ * |-------------------|--------------|-----------|---------------------------------------|
+ * | Total Flit Width: | 680 bits     |           | For 512-bit Data Width                |
+ *
+ * Field Breakdown by Size:
+ * - 1-bit fields:  tracetag (1 field)
+ * - 2-bit fields:  resperr, ccid, dataid, tagop (4 fields)
+ * - 3-bit fields:  resp, cbusy, fwdstate, datapull (4 fields)
+ * - 4-bit fields:  qos, opcode, datasource, tu (4 fields)
+ * - 11-bit fields: tgtid, srcid, homenid (3 fields)
+ * - 12-bit fields: txnid, dbid (2 fields)
+ * - 16-bit fields: tag (1 field)
+ * - 64-bit fields: be (1 field)
+ * - 512-bit fields: data (1 field)
+ *
+ * Data Bus Width Variations:
+ * - 128-bit Data: Total flit width = 221 to 233 bits
+ * - 256-bit Data: Total flit width = 370 to 382 bits
+ * - 512-bit Data: Total flit width = 668 to 680 bits (this implementation)
+ *
+ * Note: The union field_8 allows the same 4 bits to be interpreted differently:
+ *       - datasource: Full 4-bit field indicating data source in responses
+ *       - fwdstate: 3 bits for DCT forward state (bit 61 is padded with 0)
+ *       - datapull: 3 bits for Stash data pull (bit 61 is padded with 0)
+ *
+ * Optional Fields (not implemented in this version):
+ * - DataCheck (DC): 0 or DW/8 bits for data integrity
+ * - Poison (P): 0 or DW/64 bits for error indication
+ * - RSVDC: 0, 4, 8, 12, 16, 24, or 32 bits for reserved/vendor use
+ */
+
 #ifndef __CHI_DAT_FLIT_H__
 #define __CHI_DAT_FLIT_H__
 
@@ -11,11 +70,6 @@ struct ChiDatFlit
 private:
     static constexpr auto DATA_WIDTH = 512;
     static constexpr auto NODEID_WIDTH = 11;
-
-    // Calculate total flit width
-    // data[511:0] + be[63:0] + tracetag[0:0] + tu[3:0] + tag[15:0] + tagop[1:0] + dataid[1:0] + ccid[1:0] +
-    // dbid[11:0] + cbusy[2:0] + datasource[3:0] + resp[2:0] + resperr[1:0] + opcode[3:0] + homenid[10:0] +
-    // txnid[11:0] + srcid[10:0] + tgtid[10:0] + qos[3:0]
     static constexpr auto FLIT_WIDTH = 680;
 
     // Field bit positions (from LSB)
