@@ -13,8 +13,10 @@ public:
     ClkResetIfx(sc_core::sc_module_name name);
 
     sc_core::sc_clock main_clock_out;
-    sc_core::sc_signal<bool> rstb_ic_clk_out;
-    sc_core::sc_signal<bool> cc_rstb_intfrx_clk_out;
+    sc_core::sc_signal<bool> rstb_out;
+
+private:
+    void deassertReset();
 };
 
 #endif  // __CLK_RESET_IFX_H__
