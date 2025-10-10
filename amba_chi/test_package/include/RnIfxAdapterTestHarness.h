@@ -14,9 +14,16 @@ struct RnIfxAdapterTestHarness
         : initiator(std::make_shared<SimpleInitiator>("SimpleInitiator"))
         , rnAdapter(std::make_shared<RnIfxAdapter>("RnIfxAdapter"))
     {
+        bind_input_signals();
         initialize_unused_inputs();
         spdlog::info("Target Socket Name: {:s}", rnAdapter->target_socket.name());
         initiator->initiator_socket.bind(rnAdapter->target_socket);
+    }
+
+    void bind_input_signals()
+    {
+        rnAdapter->intfrx_clk_in(intfrx_clk_sig);
+        rnAdapter->rstb_intfrx_clk_in(rstb_intfrx_clk_sig);
     }
 
     void initialize_unused_inputs()
@@ -47,6 +54,9 @@ struct RnIfxAdapterTestHarness
 
     std::shared_ptr<SimpleInitiator> initiator;
     std::shared_ptr<RnIfxAdapter> rnAdapter;
+
+    sc_core::sc_signal<bool> intfrx_clk_sig;
+    sc_core::sc_signal<bool> rstb_intfrx_clk_sig;
 };
 
 #endif  // __RN_IFXADAPTER_TEST_HARNESS_H__

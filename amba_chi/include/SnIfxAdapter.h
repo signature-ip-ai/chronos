@@ -24,7 +24,11 @@ public:
 
     tlm_utils::simple_initiator_socket<SnIfxAdapter, BUS_WIDTH, TYPES> initiator_socket;
 
-    // Reset and Clocking will be provided by the adapter
+    // Reset and Clocking will be provided by ClkResetIfx
+    sc_core::sc_in<bool> intfrx_clk_in;
+    sc_core::sc_in<bool> rstb_intfrx_clk_in;
+
+    // Reset and Clocking forwarded to the NoC SN interface
     sc_core::sc_signal<bool> intfrx_clk_out;
     sc_core::sc_signal<bool> rstb_intfrx_clk_out;
 
@@ -54,6 +58,9 @@ public:
 private:
     tlm::tlm_sync_enum nb_transport_bw(tlm::tlm_generic_payload&, tlm::tlm_phase&, sc_core::sc_time&);
     void invalidate_direct_mem_ptr(sc_dt::uint64 start_range, sc_dt::uint64 end_range);
+
+    void forward_clock();
+    void forward_reset();
 };
 
 #endif  // __SN_IFX_ADAPTER_H__

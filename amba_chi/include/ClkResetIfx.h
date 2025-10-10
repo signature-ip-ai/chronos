@@ -14,9 +14,6 @@ public:
 
     sc_core::sc_clock main_clock_out;
     sc_core::sc_signal<bool> rstb_out;
-
-private:
-    void deassertReset();
 };
 
 #endif  // __CLK_RESET_IFX_H__
