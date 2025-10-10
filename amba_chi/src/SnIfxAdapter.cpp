@@ -2,8 +2,6 @@
 
 #include <memory>
 #include <systemc>
-#include <SnDeviceIf.hxx>
-#include <SnNocTlmIf.hxx>
 
 SnIfxAdapter::SnIfxAdapter(sc_core::sc_module_name name)
     : sc_core::sc_module(name)
