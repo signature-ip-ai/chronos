@@ -23,6 +23,9 @@ RnIfxAdapter::RnIfxAdapter(sc_core::sc_module_name name)
     sensitive << rstb_intfrx_clk_in;
     dont_initialize();
 
+    SC_METHOD(initialize_with_reset_state);
+    sensitive << rstb_intfrx_clk_in.neg();
+
     SC_METHOD(credit_check);
     sensitive << intfrx_clk_in.pos();
 
@@ -61,6 +64,22 @@ void RnIfxAdapter::forward_reset()
     rstb_intfrx_clk_out.write(rstb_intfrx_clk_in.read());
 }
 
+void RnIfxAdapter::initialize_with_reset_state()
+{
+    // Required from CHI Rev E.b 14.1.3
+    TX_LINKACTIVEREQ_out.write(false);
+    RX_LINKACTIVEACK_out.write(false);
+
+    TX_REQFLITV_out.write(false);
+    TX_DATFLITV_out.write(false);
+    TX_RSPFLITV_out.write(false);
+
+    // all other signals
+    TX_REQFLITPEND_out.write(true);
+    TX_RSPFLITPEND_out.write(true);
+    TX_DATFLITPEND_out.write(true);
+}
+
 void RnIfxAdapter::credit_check()
 {
     if (MAX_CREDITS > req_credit_counter_ && TX_REQLCRDV_in.read())
@@ -80,20 +99,4 @@ void RnIfxAdapter::credit_check()
         ++rsp_credit_counter_;
         std::cout << "Increment rsp_credit_counter_ " << rsp_credit_counter_ << "\n";
     }
-}
-
-void RnIfxAdapter::initialize_with_reset_state()
-{
-    // Required from CHI Rev E.b 14.1.3
-    TX_LINKACTIVEREQ_out.write(false);
-    RX_LINKACTIVEACK_out.write(false);
-
-    TX_REQFLITV_out.write(false);
-    TX_DATFLITV_out.write(false);
-    TX_RSPFLITV_out.write(false);
-
-    // all other signals
-    TX_REQFLITPEND_out.write(true);
-    TX_RSPFLITPEND_out.write(true);
-    TX_DATFLITPEND_out.write(true);
 }
