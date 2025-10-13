@@ -11,7 +11,6 @@ class ambachicast(ConanFile):
     name = "ambachicast"
     version = "1.0"
     systemc_version = "3.0.1"
-    spdlog_version = "1.15.3"
     cmake_version = "3.31.6"
 
     # Optional metadata
@@ -42,13 +41,7 @@ class ambachicast(ConanFile):
         f"systemc/{systemc_version}:disable_copyright_msg": True,
         f"systemc/{systemc_version}:enable_phase_callbacks": True,
         f"systemc/{systemc_version}:enable_phase_callbacks_tracing": False,
-        f"systemc/{systemc_version}:enable_immediate_self_notifications": False,
-
-        f"spdlog/{spdlog_version}:fPIC": True,
-        f"spdlog/{spdlog_version}:shared": False,
-        f"spdlog/{spdlog_version}:header_only": False,
-        f"spdlog/{spdlog_version}:use_std_fmt": False,
-        f"spdlog/{spdlog_version}:no_exceptions": True
+        f"systemc/{systemc_version}:enable_immediate_self_notifications": False
     }
 
     exports_sources = "CMakeLists.txt", "src/*", "include/*"
@@ -74,7 +67,6 @@ class ambachicast(ConanFile):
 
     def requirements(self):
         self.requires(f"systemc/{self.systemc_version}")
-        self.requires(f"spdlog/{self.spdlog_version}")
 
 
     def build_requirements(self):

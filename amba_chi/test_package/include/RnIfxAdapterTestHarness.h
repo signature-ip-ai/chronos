@@ -28,28 +28,28 @@ struct RnIfxAdapterTestHarness
 
     void initialize_unused_inputs()
     {
-        rnAdapter->TX_LINKACTIVEREQ_in.write(false);
-        rnAdapter->RX_REQLCRDV_in.write(true);
-        rnAdapter->RX_RSPLCRDV_in.write(true);
-        rnAdapter->RX_DATLCRDV_in.write(true);
-        rnAdapter->RX_LINKACTIVEACK_in.write(false);
+        rnAdapter->RX_LINKACTIVEREQ_in.write(false);
+        rnAdapter->TX_REQLCRDV_in.write(false);
+        rnAdapter->TX_RSPLCRDV_in.write(false);
+        rnAdapter->TX_DATLCRDV_in.write(false);
+        rnAdapter->TX_LINKACTIVEACK_in.write(false);
 
-        // TX channel inputs (from network)
-        rnAdapter->TX_SNPFLITPEND_in.write(false);
-        rnAdapter->TX_SNPFLITV_in.write(false);
-        rnAdapter->TX_RSPFLITPEND_in.write(false);
-        rnAdapter->TX_RSPFLITV_in.write(false);
-        rnAdapter->TX_DATFLITPEND_in.write(false);
-        rnAdapter->TX_DATFLITV_in.write(false);
+        // RX channel inputs (from network)
+        rnAdapter->RX_SNPFLITPEND_in.write(false);
+        rnAdapter->RX_SNPFLITV_in.write(false);
+        rnAdapter->RX_RSPFLITPEND_in.write(false);
+        rnAdapter->RX_RSPFLITV_in.write(false);
+        rnAdapter->RX_DATFLITPEND_in.write(false);
+        rnAdapter->RX_DATFLITV_in.write(false);
 
         // System signals
-        rnAdapter->TXSACTIVE_in.write(false);
+        rnAdapter->RXSACTIVE_in.write(false);
         rnAdapter->SYSCOACK_in.write(false);
 
         // Initialize flit data to zero/default values
-        rnAdapter->TX_SNPFLIT_in.write(RnIfxAdapter::snpflit_t{});
-        rnAdapter->TX_RSPFLIT_in.write(RnIfxAdapter::rspflit_t{});
-        rnAdapter->TX_DATFLIT_in.write(RnIfxAdapter::datflit_t{});
+        rnAdapter->RX_SNPFLIT_in.write(RnIfxAdapter::snpflit_t{});
+        rnAdapter->RX_RSPFLIT_in.write(RnIfxAdapter::rspflit_t{});
+        rnAdapter->RX_DATFLIT_in.write(RnIfxAdapter::datflit_t{});
     }
 
     std::shared_ptr<SimpleInitiator> initiator;
