@@ -1,7 +1,5 @@
 #include <SnIfxAdapter.h>
-
-#include <memory>
-#include <systemc>
+#include <iostream>
 
 SnIfxAdapter::SnIfxAdapter(sc_core::sc_module_name name)
     : sc_core::sc_module(name)
@@ -17,6 +15,8 @@ SnIfxAdapter::SnIfxAdapter(sc_core::sc_module_name name)
     SC_METHOD(forward_reset);
     sensitive << rstb_intfrx_clk_in;
     dont_initialize();
+
+    std::cout << (const char*) name << " elaborated\n";
 }
 
 tlm::tlm_sync_enum SnIfxAdapter::nb_transport_bw(

@@ -1,4 +1,5 @@
 #include <ProgIfxAdapter.h>
+#include <iostream>
 
 ProgIfxAdapter::ProgIfxAdapter(sc_core::sc_module_name name)
     : sc_core::sc_module(name)
@@ -18,6 +19,8 @@ ProgIfxAdapter::ProgIfxAdapter(sc_core::sc_module_name name)
     SC_METHOD(forward_reset);
     sensitive << PRESETn_prog_in;
     dont_initialize();
+
+    std::cout << (const char*) name << " elaborated\n";
 }
 
 void ProgIfxAdapter::forward_clock()

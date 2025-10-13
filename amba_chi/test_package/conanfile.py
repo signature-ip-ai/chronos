@@ -28,7 +28,7 @@ class amabchicast_tests(ConanFile):
 
         f"spdlog/{spdlog_version}:fPIC": True,
         f"spdlog/{spdlog_version}:shared": False,
-        f"spdlog/{spdlog_version}:header_only": False,
+        f"spdlog/{spdlog_version}:header_only": True,
         f"spdlog/{spdlog_version}:use_std_fmt": False,
         f"spdlog/{spdlog_version}:no_exceptions": True,
 

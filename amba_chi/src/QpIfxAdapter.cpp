@@ -1,4 +1,5 @@
 #include <QpIfxAdapter.h>
+#include <iostream>
 
 QpIfxAdapter::QpIfxAdapter(sc_core::sc_module_name name)
     : sc_core::sc_module(name)
@@ -15,6 +16,8 @@ QpIfxAdapter::QpIfxAdapter(sc_core::sc_module_name name)
     SC_METHOD(forward_reset);
     sensitive << qp_rstb_in;
     dont_initialize();
+
+    std::cout << (const char*) name << " elaborated\n";
 }
 
 void QpIfxAdapter::forward_clock()

@@ -17,7 +17,7 @@ file(GLOB RNIFXADAPTER_TESTS_SOURCES src/RnIfxAdapterTests.cpp src/ambachicast_t
 add_executable(RnIfxAdapterTests ${RNIFXADAPTER_TESTS_SOURCES})
 
 get_target_property(SYSTEMC_INCLUDE_DIRS SystemC::systemc INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog_header_only INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(GTEST_INCLUDE_DIRS GTest::gtest INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(AMBACHICAST_INCLUDE_DIRS ambachicast::ambachicast INTERFACE_INCLUDE_DIRECTORIES)
 
@@ -29,7 +29,7 @@ target_include_directories(RnIfxAdapterTests PUBLIC
     ${AMBACHICAST_INCLUDE_DIRS})
 
 target_compile_options(RnIfxAdapterTests PRIVATE ${CUSTOM_CXX_FLAGS})
-target_link_libraries(RnIfxAdapterTests SystemC::systemc spdlog::spdlog ambachicast::ambachicast gtest::gtest)
+target_link_libraries(RnIfxAdapterTests SystemC::systemc fmt::fmt spdlog::spdlog_header_only ambachicast::ambachicast gtest::gtest)
 
 ########## SnIfxAdapterTests Executable
 file(GLOB SNIFXADAPTER_TESTS_SOURCES src/SnIfxAdapterTests.cpp src/ambachicast_tests.cpp)
@@ -37,7 +37,7 @@ file(GLOB SNIFXADAPTER_TESTS_SOURCES src/SnIfxAdapterTests.cpp src/ambachicast_t
 add_executable(SnIfxAdapterTests ${SNIFXADAPTER_TESTS_SOURCES})
 
 get_target_property(SYSTEMC_INCLUDE_DIRS SystemC::systemc INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog_header_only INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(GTEST_INCLUDE_DIRS GTest::gtest INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(AMBACHICAST_INCLUDE_DIRS ambachicast::ambachicast INTERFACE_INCLUDE_DIRECTORIES)
 
@@ -49,7 +49,7 @@ target_include_directories(SnIfxAdapterTests PUBLIC
     ${AMBACHICAST_INCLUDE_DIRS})
 
 target_compile_options(SnIfxAdapterTests PRIVATE ${CUSTOM_CXX_FLAGS})
-target_link_libraries(SnIfxAdapterTests SystemC::systemc spdlog::spdlog ambachicast::ambachicast gtest::gtest)
+target_link_libraries(SnIfxAdapterTests SystemC::systemc fmt::fmt spdlog::spdlog_header_only ambachicast::ambachicast gtest::gtest)
 
 ########## FlitTests Executable
 file(GLOB FLIT_TESTS_SOURCES
@@ -62,7 +62,7 @@ file(GLOB FLIT_TESTS_SOURCES
 add_executable(FlitTests ${FLIT_TESTS_SOURCES})
 
 get_target_property(SYSTEMC_INCLUDE_DIRS SystemC::systemc INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog_header_only INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(GTEST_INCLUDE_DIRS GTest::gtest INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(AMBACHICAST_INCLUDE_DIRS ambachicast::ambachicast INTERFACE_INCLUDE_DIRECTORIES)
 
@@ -75,4 +75,4 @@ target_include_directories(FlitTests PUBLIC
     ${AMBACHICAST_INCLUDE_DIRS})
 
 target_compile_options(FlitTests PRIVATE ${CUSTOM_CXX_FLAGS})
-target_link_libraries(FlitTests SystemC::systemc spdlog::spdlog ambachicast::ambachicast gtest::gtest)
+target_link_libraries(FlitTests SystemC::systemc fmt::fmt spdlog::spdlog_header_only ambachicast::ambachicast gtest::gtest)
