@@ -46,6 +46,8 @@ void SnIfxAdapter::forward_reset()
 
 void SnIfxAdapter::initialize_with_reset_state()
 {
+    std::cout << name() << ": initialize_with_reset_state\n";
+
     // Required from CHI Rev E.b 14.1.3
     TX_DATFLITV_out.write(false);
     TX_RSPFLITV_out.write(false);

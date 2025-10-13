@@ -5,6 +5,7 @@
 #include <tlm>
 #include <tlm_utils/simple_target_socket.h>
 
+enum class ELinkState;
 
 SC_MODULE(RnIfxAdapter)
 {
@@ -85,14 +86,16 @@ private:
 
     void forward_clock();
     void forward_reset();
+    void main_process();
 
-    void credit_check();
+    void adapter_reset();
+    void tx_link_handshake();
+    void tx_credit_check();
 
-    void initialize_with_reset_state();
-
-    uint8_t req_credit_counter_;
-    uint8_t dat_credit_counter_;
-    uint8_t rsp_credit_counter_;
+    uint8_t tx_req_credit_counter_;
+    uint8_t tx_dat_credit_counter_;
+    uint8_t tx_rsp_credit_counter_;
+    ELinkState tx_link_state_;
 };
 
 #endif  // __RN_IFX_ADAPTER_H__
