@@ -29,25 +29,25 @@ struct SnIfxAdapterTestHarness
     void initialize_unused_inputs()
     {
         // Link activation inputs
-        snAdapter->TX_LINKACTIVEREQ_in.write(false);
-        snAdapter->RX_LINKACTIVEACK_in.write(false);
+        snAdapter->RX_LINKACTIVEREQ_in.write(false);
+        snAdapter->TX_LINKACTIVEACK_in.write(false);
 
-        // Credit inputs - initialize to true (credits available)
-        snAdapter->RX_RSPLCRDV_in.write(true);
-        snAdapter->RX_DATLCRDV_in.write(true);
+        // Credit inputs - initialize to false
+        snAdapter->TX_RSPLCRDV_in.write(false);
+        snAdapter->TX_DATLCRDV_in.write(false);
 
-        // TX channel inputs (from slave device)
-        snAdapter->TX_REQFLITPEND_in.write(false);
-        snAdapter->TX_REQFLITV_in.write(false);
-        snAdapter->TX_DATFLITPEND_in.write(false);
-        snAdapter->TX_DATFLITV_in.write(false);
+        // RX channel inputs (from slave device)
+        snAdapter->RX_REQFLITPEND_in.write(false);
+        snAdapter->RX_REQFLITV_in.write(false);
+        snAdapter->RX_DATFLITPEND_in.write(false);
+        snAdapter->RX_DATFLITV_in.write(false);
 
         // System signal
-        snAdapter->TXSACTIVE_in.write(false);
+        snAdapter->RXSACTIVE_in.write(false);
 
         // Initialize flit data to zero/default values
-        snAdapter->TX_REQFLIT_in.write(SnIfxAdapter::reqflit_t{});
-        snAdapter->TX_DATFLIT_in.write(SnIfxAdapter::datflit_t{});
+        snAdapter->RX_REQFLIT_in.write(SnIfxAdapter::reqflit_t{});
+        snAdapter->RX_DATFLIT_in.write(SnIfxAdapter::datflit_t{});
     }
 
     std::shared_ptr<SimpleTarget> target;

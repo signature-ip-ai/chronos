@@ -7,5 +7,18 @@ ClkResetIfx::ClkResetIfx(sc_core::sc_module_name name)
 {
     rstb_out.write(true);
 
+    SC_THREAD(initialize_system);
+
     std::cout << (const char*) name << " elaborated\n";
+}
+
+void ClkResetIfx::initialize_system()
+{
+    std::cout << "Intializing system\n";
+
+    rstb_out.write(false);
+    wait(sc_core::sc_time(2, sc_core::SC_NS));
+    rstb_out.write(true);
+
+    std::cout << "Intialized\n";
 }
