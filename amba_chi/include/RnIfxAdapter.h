@@ -1,11 +1,13 @@
 #ifndef __RN_IFX_ADAPTER_H__
 #define __RN_IFX_ADAPTER_H__
 
+#include <memory>
 #include <systemc>
 #include <tlm>
 #include <tlm_utils/simple_target_socket.h>
 
 enum class ELinkState;
+class RnIfxTracer;
 
 SC_MODULE(RnIfxAdapter)
 {
@@ -25,6 +27,15 @@ public:
 
     SC_HAS_PROCESS(RnIfxAdapter);
     RnIfxAdapter(sc_core::sc_module_name name);
+    ~RnIfxAdapter() = default;
+
+    RnIfxAdapter(const RnIfxAdapter&) = delete;
+    RnIfxAdapter& operator=(const RnIfxAdapter&) = delete;
+    RnIfxAdapter(RnIfxAdapter&& other) noexcept = delete;
+    RnIfxAdapter& operator=(RnIfxAdapter&& other) noexcept = delete;
+
+    void enable_trace();
+    void set_trace_time_unit(double value, sc_core::sc_time_unit);
 
     tlm_utils::simple_target_socket<RnIfxAdapter, BUS_WIDTH, TYPES> target_socket;
 
@@ -86,16 +97,24 @@ private:
 
     void forward_clock();
     void forward_reset();
-    void main_process();
+    void tx_channel_main_process();
 
-    void adapter_reset();
+    void tx_channel_adapter_reset();
+    void rx_channel_adapter_reset();
     void tx_link_handshake();
+    void rx_link_handshake();
     void tx_credit_check();
 
+    void update_rx_link_state();
+
+    std::shared_ptr<RnIfxTracer> tracer_;
     uint8_t tx_req_credit_counter_;
     uint8_t tx_dat_credit_counter_;
     uint8_t tx_rsp_credit_counter_;
+
     ELinkState tx_link_state_;
+    ELinkState rx_link_state_current_;
+    ELinkState rx_link_state_next_;
 };
 
 #endif  // __RN_IFX_ADAPTER_H__

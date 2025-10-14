@@ -12,18 +12,13 @@ set(CUSTOM_CXX_FLAGS -Wall -Werror -Wno-format -O0 -g)
 
 ########## Build Library
 get_target_property(SYSTEMC_INCLUDE_DIRS SystemC::systemc INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(SPDLOG_INCLUDE_DIRS spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
 
 file(GLOB sources src/*.cpp)
 
 add_library(${PROJECT_NAME} STATIC ${sources})
 target_include_directories(${PROJECT_NAME} PUBLIC include ${SYSTEMC_INCLUDE_DIRS} ${SPDLOG_INCLUDE_DIRS})
 target_compile_options(${PROJECT_NAME} PRIVATE ${CUSTOM_CXX_FLAGS})
-target_link_libraries(${PROJECT_NAME}
-    -Wl,--whole-archive
-    SystemC::systemc
-    spdlog::spdlog
-    -Wl,--no-whole-archive)
+target_link_libraries(${PROJECT_NAME} PUBLIC SystemC::systemc)
 
 ########## Install Package Library
 file(GLOB_RECURSE TARGET_LIBRARY_HEADERS
@@ -58,7 +53,7 @@ target_include_directories(RnIfxAdapterTests PUBLIC
     ${GTEST_INCLUDE_DIRS})
 
 target_compile_options(RnIfxAdapterTests PRIVATE ${CUSTOM_CXX_FLAGS})
-target_link_libraries(RnIfxAdapterTests SystemC::systemc gtest::gtest ${PROJECT_NAME})
+target_link_libraries(RnIfxAdapterTests SystemC::systemc gtest::gtest spdlog::spdlog ${PROJECT_NAME})
 
 ########## SnIfxAdapterTests Executable
 file(GLOB SNIFXADAPTER_TESTS_SOURCES tests/src/SnIfxAdapterTests.cpp tests/src/ambachicast_tests.cpp)
@@ -77,7 +72,7 @@ target_include_directories(SnIfxAdapterTests PUBLIC
     ${GTEST_INCLUDE_DIRS})
 
 target_compile_options(SnIfxAdapterTests PRIVATE ${CUSTOM_CXX_FLAGS})
-target_link_libraries(SnIfxAdapterTests SystemC::systemc gtest::gtest ${PROJECT_NAME})
+target_link_libraries(SnIfxAdapterTests SystemC::systemc gtest::gtest spdlog::spdlog ${PROJECT_NAME})
 
 ########## FlitTests Executable
 file(GLOB FLIT_TESTS_SOURCES
@@ -101,4 +96,4 @@ target_include_directories(FlitTests PUBLIC
     ${GTEST_INCLUDE_DIRS})
 
 target_compile_options(FlitTests PRIVATE ${CUSTOM_CXX_FLAGS})
-target_link_libraries(FlitTests SystemC::systemc gtest::gtest ${PROJECT_NAME})
+target_link_libraries(FlitTests SystemC::systemc gtest::gtest spdlog::spdlog ${PROJECT_NAME})

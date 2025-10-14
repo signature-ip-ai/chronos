@@ -8,7 +8,7 @@ SnIfxAdapter::SnIfxAdapter(sc_core::sc_module_name name)
     initiator_socket.register_nb_transport_bw(this, &SnIfxAdapter::nb_transport_bw);
     initiator_socket.register_invalidate_direct_mem_ptr(this, &SnIfxAdapter::invalidate_direct_mem_ptr);
 
-    initialize_with_reset_state();
+    adapter_reset();
 
     SC_METHOD(forward_clock);
     sensitive << intfrx_clk_in;
@@ -18,8 +18,9 @@ SnIfxAdapter::SnIfxAdapter(sc_core::sc_module_name name)
     sensitive << rstb_intfrx_clk_in;
     dont_initialize();
 
-    SC_METHOD(initialize_with_reset_state);
-    sensitive << rstb_intfrx_clk_in.neg();
+    SC_METHOD(main_process);
+    sensitive << intfrx_clk_in.pos() << rstb_intfrx_clk_in.neg();
+    dont_initialize();
 
     std::cout << (const char*) name << " elaborated\n";
 }
@@ -44,9 +45,18 @@ void SnIfxAdapter::forward_reset()
     rstb_intfrx_clk_out.write(rstb_intfrx_clk_in.read());
 }
 
-void SnIfxAdapter::initialize_with_reset_state()
+void SnIfxAdapter::main_process()
 {
-    std::cout << name() << ": initialize_with_reset_state\n";
+    if (!rstb_intfrx_clk_in.read())
+    {
+        adapter_reset();
+        return;
+    }
+}
+
+void SnIfxAdapter::adapter_reset()
+{
+    std::cout << name() << ": adapter_reset\n";
 
     // Required from CHI Rev E.b 14.1.3
     TX_DATFLITV_out.write(false);

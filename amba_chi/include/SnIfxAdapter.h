@@ -67,8 +67,9 @@ private:
 
     void forward_clock();
     void forward_reset();
+    void main_process();
 
-    void initialize_with_reset_state();
+    void adapter_reset();
 };
 
 #endif  // __SN_IFX_ADAPTER_H__
