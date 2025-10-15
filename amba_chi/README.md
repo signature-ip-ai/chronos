@@ -5,3 +5,9 @@
 
 ## SnIfxAdapter block diagram
 ![SnIfxAdapter](./docs/images/SnIfxAdapter.svg)
+
+## RN TLM Transactions sequence diagram
+![RnTlmTransactions](./docs/images/RnTlmTransactions.svg)
+
+## SN TLM Transactions sequence diagram
+![SnTlmTransactions](./docs/images/SnTlmTransactions.svg)
