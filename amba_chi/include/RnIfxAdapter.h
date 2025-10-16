@@ -8,6 +8,7 @@
 
 enum class ELinkState;
 class RnIfxTracer;
+class RnIfxAdapterTxChannel;
 
 SC_MODULE(RnIfxAdapter)
 {
@@ -97,22 +98,16 @@ private:
 
     void forward_clock();
     void forward_reset();
-    void tx_channel_main_process();
 
-    void tx_channel_adapter_reset();
     void rx_channel_adapter_reset();
-    void tx_link_handshake();
     void rx_link_handshake();
-    void tx_credit_check();
-
     void update_rx_link_state();
 
-    std::shared_ptr<RnIfxTracer> tracer_;
-    uint8_t tx_req_credit_counter_;
-    uint8_t tx_dat_credit_counter_;
-    uint8_t tx_rsp_credit_counter_;
+    void bind_tx_channels();
 
-    ELinkState tx_link_state_;
+    std::shared_ptr<RnIfxTracer> tracer_;
+    std::shared_ptr<RnIfxAdapterTxChannel> tx_channel_;
+
     ELinkState rx_link_state_current_;
     ELinkState rx_link_state_next_;
 };
