@@ -1,0 +1,19 @@
+@startuml
+
+class Phase
+{
+    +Phase(transport_type, credits)
+    +Phase(transport_type)
+    +transport_type: enum {CREDIT, TRANSACTION}
+    +credits: uint8_t
+}
+
+enum sync_enum
+{
+    ACCEPTED = TLM_ACCEPTED
+    UPDATED = TLM_UPDATED
+    COMPLETED = TLM_COMPLETED
+    RETRY = 3
+}
+
+@enduml

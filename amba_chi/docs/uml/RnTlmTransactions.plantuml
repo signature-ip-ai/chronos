@@ -25,18 +25,18 @@ participant "RnModel\n(Initiator)" as I #e3f2fd
 participant "RnIfxAdapter\n(Target)" as T #f3e5f5
 
 == Forward Path Credit ==
-I <-- T : **nb_transport_bw**(FW_CREDIT) : ACCEPTED
+I <-- T : **nb_transport_bw**(Phase(transport_type=CREDIT, credits=<credits>)) : ACCEPTED
 note right
   This transaction will contain credit information for either
   CHI_REQ, CHI_RSP or CHI_DATA in the forward path
 end note
 
 == Forward Path Transactions ==
-group CHI_REQ + tlm_txn_id Phase
+group CHI REQ Transaction
     alt Accepted
-        I -> T : **nb_transport_fw**(CHI_REQ) : ACCEPTED
+        I -> T : **nb_transport_fw**(Phase(transport_type=TRANSACTION)) : ACCEPTED
     else Retry
-        I -> T : **nb_transport_fw**(CHI_REQ) : RETRY
+        I -> T : **nb_transport_fw**(Phase(transport_type=TRANSACTION)) : RETRY
         note right
           For any given request, the initiator may or may not
           retry the transaction right away or not at all.
@@ -47,11 +47,11 @@ group CHI_REQ + tlm_txn_id Phase
     end
 end
 
-group CHI_DAT + tlm_txn_id Phase
+group CHI WDAT Transaction
     alt Accepted
-        I -> T : **nb_transport_fw**(CHI_DAT) : ACCEPTED
+        I -> T : **nb_transport_fw**(Phase(transport_type=TRANSACTION)) : ACCEPTED
     else Retry
-        I -> T : **nb_transport_fw**(CHI_DAT) : RETRY
+        I -> T : **nb_transport_fw**(Phase(transport_type=TRANSACTION)) : RETRY
         note right
           For any given data, the initiator must always retry.
           The initiator may or may not retry the transaction
@@ -63,11 +63,11 @@ group CHI_DAT + tlm_txn_id Phase
     end
 end
 
-group CHI_RSP + tlm_txn_id Phase
+group CHI SRSP Transaction
     alt Accepted
-        I -> T : **nb_transport_fw**(CHI_RSP) : ACCEPTED
+        I -> T : **nb_transport_fw**(Phase(transport_type=TRANSACTION)) : ACCEPTED
     else Retry
-        I -> T : **nb_transport_fw**(CHI_RSP) : RETRY
+        I -> T : **nb_transport_fw**(Phase(transport_type=TRANSACTION)) : RETRY
         note right
           For any given response, the initiator must always retry.
           The initiator may or may not retry the transaction
@@ -80,18 +80,18 @@ group CHI_RSP + tlm_txn_id Phase
 end
 
 == Backward Path Credit ==
-I --> T : **nb_transport_fw**(FW_CREDIT) : ACCEPTED
+I --> T : **nb_transport_fw**(Phase(transport_type=CREDIT, credits=<credits>)) : ACCEPTED
 note right
   This transaction will contain credit information for either
   CHI_SNP, CHI_RSP or CHI_DATA in the backward path
 end note
 
 == Backward Path Transactions ==
-group CHI_SNP + tlm_txn_id Phase
+group CHI SNP Transaction
     alt Accepted
-        I <- T : **nb_transport_bw**(CHI_SNP) : ACCEPTED
+        I <- T : **nb_transport_bw**(Phase(transport_type=TRANSACTION)) : ACCEPTED
     else Retry
-        I <- T : **nb_transport_bw**(CHI_SNP) : RETRY
+        I <- T : **nb_transport_bw**(Phase(transport_type=TRANSACTION)) : RETRY
         note right
           For any given snoop request, the target must always
           retry. The target may or may not retry the transaction
@@ -103,11 +103,11 @@ group CHI_SNP + tlm_txn_id Phase
     end
 end
 
-group CHI_RSP + tlm_txn_id Phase
+group CHI CRSP Transaction
     alt Accepted
-        I <- T : **nb_transport_bw**(CHI_RSP) : ACCEPTED
+        I <- T : **nb_transport_bw**(Phase(transport_type=TRANSACTION)) : ACCEPTED
     else Retry
-        I <- T : **nb_transport_bw**(CHI_RSP) : RETRY
+        I <- T : **nb_transport_bw**(Phase(transport_type=TRANSACTION)) : RETRY
         note right
           For any given response, the target must always retry.
           The target may or may not retry the transaction
@@ -119,11 +119,11 @@ group CHI_RSP + tlm_txn_id Phase
     end
 end
 
-group CHI_DAT + tlm_txn_id Phase
+group CHI RDAT Transaction
     alt Accepted
-        I <- T : **nb_transport_bw**(CHI_DAT) : ACCEPTED
+        I <- T : **nb_transport_bw**(Phase(transport_type=TRANSACTION)) : ACCEPTED
     else Retry
-        I <- T : **nb_transport_bw**(CHI_DAT) : RETRY
+        I <- T : **nb_transport_bw**(Phase(transport_type=TRANSACTION)) : RETRY
         note right
           For any given data, the target must always retry.
           The target may or may not retry the transaction

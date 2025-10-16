@@ -6,6 +6,9 @@
 ## SnIfxAdapter block diagram
 ![SnIfxAdapter](./docs/images/SnIfxAdapter.svg)
 
+## TLM Phase and sync_enum class diagram
+![Phases](./docs/images/ClassDiagrams.svg)
+
 ## RN TLM Transactions sequence diagram
 ![RnTlmTransactions](./docs/images/RnTlmTransactions.svg)
 
