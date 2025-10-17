@@ -6,6 +6,10 @@
 #include <RnIfxAdapterTxChannel.h>
 #include <RnIfxAdapterRxChannel.h>
 
+#include <chi_tlm/chi_tlm_extension.h>
+#include <chi_tlm/chi_credit_extension.h>
+#include <chi_tlm/chi_enums.h>
+
 RnIfxAdapter::RnIfxAdapter(sc_core::sc_module_name module_name)
     : sc_core::sc_module(module_name)
     , target_socket()
@@ -54,8 +58,37 @@ void RnIfxAdapter::b_transport(tlm::tlm_generic_payload& trans, sc_core::sc_time
 tlm::tlm_sync_enum RnIfxAdapter::nb_transport_fw(
     tlm::tlm_generic_payload& trans, tlm::tlm_phase& phase, sc_core::sc_time& delay)
 {
-    trans.set_response_status(tlm::TLM_OK_RESPONSE);
-    return tlm::tlm_sync_enum();
+    chi::ChiExtension* chi_message = trans.get_extension<chi::ChiExtension>();
+    if (chi::REQ == phase)
+    {
+        assert(chi::ChiChannel::REQ == chi_message->channel);
+        std::cout << "Request Message received\n";
+        tx_channel_->send_chi_req(chi_message);
+        trans.set_response_status(tlm::TLM_OK_RESPONSE);
+        return tlm::TLM_ACCEPTED;
+    }
+
+    if (chi::WDAT == phase)
+    {
+        assert(chi::ChiChannel::WDAT == chi_message->channel);
+        std::cout << "Write Data Message received\n";
+        tx_channel_->send_chi_wdat(chi_message);
+        trans.set_response_status(tlm::TLM_OK_RESPONSE);
+        return tlm::TLM_ACCEPTED;
+    }
+
+    if (chi::SRSP == phase)
+    {
+        assert(chi::ChiChannel::SRSP == chi_message->channel);
+        std::cout << "Snoop Response Message received\n";
+        tx_channel_->send_chi_srsp(chi_message);
+        trans.set_response_status(tlm::TLM_OK_RESPONSE);
+        return tlm::TLM_ACCEPTED;
+    }
+
+    std::cout << "Unsupported Message type\n";
+    trans.set_response_status(tlm::TLM_COMMAND_ERROR_RESPONSE);
+    return tlm::TLM_ACCEPTED;
 }
 
 bool RnIfxAdapter::get_direct_mem_ptr(tlm::tlm_generic_payload& trans, tlm::tlm_dmi& dmi_data)

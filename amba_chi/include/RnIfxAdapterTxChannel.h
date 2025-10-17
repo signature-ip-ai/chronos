@@ -1,8 +1,14 @@
 #ifndef __RN_IFX_ADAPTER_TX_CHANNEL_H__
 #define __RN_IFX_ADAPTER_TX_CHANNEL_H__
 
+#include <deque>
 #include <systemc>
 #include <flits/definitions.h>
+#include <flits/ChiReqFlit.h>
+#include <flits/ChiDatFlit.h>
+#include <flits/ChiRspFlit.h>
+
+#include <chi_tlm/chi_tlm_extension.h>
 
 enum class ELinkState;
 
@@ -38,12 +44,28 @@ public:
 
     void initialize();
 
+    void send_chi_req(const chi::ChiExtension* message);
+    void send_chi_wdat(const chi::ChiExtension* message);
+    void send_chi_srsp(const chi::ChiExtension* message);
+
 private:
     void main_process();
     void reset();
     void link_handshake();
     void credit_check();
     void update_link_state();
+    void stage_flits();
+    void stage_req_flit();
+    void stage_dat_flit();
+    void stage_rsp_flit();
+
+    flits::reqflit_t translate_chi_req(const chi::ChiExtension* message);
+    flits::datflit_t translate_chi_wdat(const chi::ChiExtension* message);
+    flits::rspflit_t translate_chi_srsp(const chi::ChiExtension* message);
+
+    std::deque<flits::reqflit_t> req_buffer_;
+    std::deque<flits::datflit_t> dat_buffer_;
+    std::deque<flits::rspflit_t> rsp_buffer_;
 
     bool module_initialized_;
 
