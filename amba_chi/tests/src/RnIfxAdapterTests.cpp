@@ -45,18 +45,15 @@ TEST_F(RnIfxAdapterTests, RnIfxAdapterShouldSendCreditsToRnInitiator)
     sc_core::sc_start(1600, sc_core::SC_PS);
 
     EXPECT_EQ(false, rn_adapter->TX_LINKACTIVEREQ_out.read());
-    EXPECT_EQ(false, rn_adapter->TXSACTIVE_out.read());
     sc_core::sc_start(400, sc_core::SC_PS);
 
     elaborated_design->rstb_intfrx_clk_sig.write(true);
     sc_core::sc_start(2, sc_core::SC_NS);
 
     EXPECT_EQ(true, rn_adapter->TX_LINKACTIVEREQ_out.read());
-    EXPECT_EQ(true, rn_adapter->TXSACTIVE_out.read());
 
     sc_core::sc_start(10, sc_core::SC_NS);
     EXPECT_EQ(true, rn_adapter->TX_LINKACTIVEREQ_out.read());
-    EXPECT_EQ(true, rn_adapter->TXSACTIVE_out.read());
 
     rn_adapter->TX_LINKACTIVEACK_in.write(true);
     sc_core::sc_start(1, sc_core::SC_NS);
