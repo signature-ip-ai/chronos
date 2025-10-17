@@ -16,8 +16,10 @@ void ClkResetIfx::initialize_system()
 {
     std::cout << "Intializing system\n";
 
+    rstb_out.write(true);
+    wait(sc_core::sc_time(1600, sc_core::SC_PS));
     rstb_out.write(false);
-    wait(sc_core::sc_time(2, sc_core::SC_NS));
+    wait(sc_core::sc_time(1600, sc_core::SC_PS));
     rstb_out.write(true);
 
     std::cout << "Intialized\n";
