@@ -136,7 +136,11 @@ void RnIfxAdapterTxChannel::update_link_state()
 
 void RnIfxAdapterTxChannel::stage_flits()
 {
-    if (req_buffer_.empty() && dat_buffer_.empty() && rsp_buffer_.empty())
+    const auto req_buffer_empty = req_buffer_.empty();
+    const auto dat_buffer_empty = dat_buffer_.empty();
+    const auto rsp_buffer_empty = rsp_buffer_.empty();
+
+    if (req_buffer_empty && dat_buffer_empty && rsp_buffer_empty)
     {
         TXSACTIVE_out.write(false);  // All buffers are empty
         TX_REQFLITV_out.write(false);
@@ -147,9 +151,31 @@ void RnIfxAdapterTxChannel::stage_flits()
 
     TXSACTIVE_out.write(true);
 
-    if (!req_buffer_.empty())
+    if (!req_buffer_empty)
     {
         stage_req_flit();
+    }
+    else
+    {
+        TX_REQFLITV_out.write(false);
+    }
+
+    if (!dat_buffer_empty)
+    {
+        stage_dat_flit();
+    }
+    else
+    {
+        TX_DATFLITV_out.write(false);
+    }
+
+    if (!rsp_buffer_empty)
+    {
+        stage_rsp_flit();
+    }
+    else
+    {
+        TX_RSPFLITV_out.write(false);
     }
 }
 
@@ -170,6 +196,44 @@ void RnIfxAdapterTxChannel::stage_req_flit()
 
     std::cout << "Sending REQ Flit: " << req_flit << "\n";
     std::cout << "Remaining REQ credits: " << static_cast<unsigned>(req_credit_counter_) << "\n";
+}
+
+void RnIfxAdapterTxChannel::stage_dat_flit()
+{
+    if (!dat_credit_counter_ || (ELinkState::RUN != link_state_current_))
+    {
+        TX_DATFLITV_out.write(false);
+        return;
+    }
+
+    flits::datflit_t dat_flit = dat_buffer_.front();
+    TX_DATFLIT_out.write(dat_flit);
+    dat_buffer_.pop_front();
+    --dat_credit_counter_;
+
+    TX_DATFLITV_out.write(true);
+
+    std::cout << "Sending WDAT Flit: " << dat_flit << "\n";
+    std::cout << "Remaining WDAT credits: " << static_cast<unsigned>(dat_credit_counter_) << "\n";
+}
+
+void RnIfxAdapterTxChannel::stage_rsp_flit()
+{
+    if (!rsp_credit_counter_ || (ELinkState::RUN != link_state_current_))
+    {
+        TX_RSPFLITV_out.write(false);
+        return;
+    }
+
+    flits::rspflit_t rsp_flit = rsp_buffer_.front();
+    TX_RSPFLIT_out.write(rsp_flit);
+    rsp_buffer_.pop_front();
+    --rsp_credit_counter_;
+
+    TX_RSPFLITV_out.write(true);
+
+    std::cout << "Sending SRSP Flit: " << rsp_flit << "\n";
+    std::cout << "Remaining SRSP credits: " << static_cast<unsigned>(rsp_credit_counter_) << "\n";
 }
 
 flits::reqflit_t RnIfxAdapterTxChannel::translate_chi_req(const chi::ChiExtension* message)

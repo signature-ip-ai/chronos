@@ -56,6 +56,8 @@ private:
     void update_link_state();
     void stage_flits();
     void stage_req_flit();
+    void stage_dat_flit();
+    void stage_rsp_flit();
 
     flits::reqflit_t translate_chi_req(const chi::ChiExtension* message);
     flits::datflit_t translate_chi_wdat(const chi::ChiExtension* message);
