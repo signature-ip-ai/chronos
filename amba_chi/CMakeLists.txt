@@ -28,7 +28,8 @@ file(GLOB_RECURSE TARGET_LIBRARY_HEADERS
     include/QpIfxAdapter.h
     include/ClkResetIfx.h
     include/chi_enums.h
-    include/chi_tlm_extension.h)
+    include/chi_tlm_extension.h
+    include/flits/definitions.h)
 
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS BASE_DIRS include FILES ${TARGET_LIBRARY_HEADERS})
 install(TARGETS ${PROJECT_NAME} FILE_SET HEADERS)

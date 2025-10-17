@@ -5,6 +5,8 @@
 #include <tlm>
 #include <tlm_utils/simple_initiator_socket.h>
 
+#include <gmock/gmock.h>
+
 
 class SimpleInitiator : public sc_core::sc_module
 {
@@ -18,21 +20,25 @@ public:
         initiator_socket.register_invalidate_direct_mem_ptr(this, &SimpleInitiator::invalidate_direct_mem_ptr);
     }
 
-private:
     void stimulus_process()
-    {}
-
-    tlm::tlm_sync_enum nb_transport_bw(tlm::tlm_generic_payload& trans,
-                                     tlm::tlm_phase& phase,
-                                     sc_core::sc_time& delay)
     {
-        return tlm::TLM_COMPLETED;
+
     }
 
-    void invalidate_direct_mem_ptr(sc_dt::uint64 start_range,
-                                 sc_dt::uint64 end_range)
-    {
-    }
+    // tlm::tlm_sync_enum nb_transport_bw(tlm::tlm_generic_payload& trans,
+    //                                  tlm::tlm_phase& phase,
+    //                                  sc_core::sc_time& delay)
+    // {
+    //     return tlm::TLM_COMPLETED;
+    // }
+
+    MOCK_METHOD(tlm::tlm_sync_enum, nb_transport_bw, (tlm::tlm_generic_payload& trans, tlm::tlm_phase& phase, sc_core::sc_time& delay));
+    MOCK_METHOD(void, invalidate_direct_mem_ptr, (sc_dt::uint64 start_range, sc_dt::uint64 end_range));
+
+    // void invalidate_direct_mem_ptr(sc_dt::uint64 start_range,
+    //                              sc_dt::uint64 end_range)
+    // {
+    // }
 };
 
 #endif  // __SIMPLE_INITIATOR_H__

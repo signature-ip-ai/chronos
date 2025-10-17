@@ -4,20 +4,20 @@
 #include <ELinkState.h>
 #include <RnIfxTracer.h>
 #include <RnIfxAdapterTxChannel.h>
+#include <RnIfxAdapterRxChannel.h>
 
 RnIfxAdapter::RnIfxAdapter(sc_core::sc_module_name module_name)
     : sc_core::sc_module(module_name)
     , target_socket()
     , tracer_(nullptr)
     , tx_channel_(std::make_shared<RnIfxAdapterTxChannel>("RnIfxAdapterTxChannel"))
-    , rx_link_state_current_(ELinkState::STOP)
-    , rx_link_state_next_(ELinkState::STOP)
+    , rx_channel_(std::make_shared<RnIfxAdapterRxChannel>("RnIfxAdapterRxChannel"))
 {
     bind_tx_channels();
     tx_channel_->initialize();
 
-    enable_trace();
-    set_trace_time_unit(10, sc_core::SC_PS);
+    bind_rx_channels();
+    rx_channel_->initialize();
 
     target_socket.register_b_transport(this, &RnIfxAdapter::b_transport);
     target_socket.register_nb_transport_fw(this, &RnIfxAdapter::nb_transport_fw);
@@ -78,44 +78,6 @@ void RnIfxAdapter::forward_reset()
     rstb_intfrx_clk_out.write(rstb_intfrx_clk_in.read());
 }
 
-void RnIfxAdapter::rx_channel_adapter_reset()
-{
-    std::cout << name() << ": rx_channel_adapter_reset\n";
-
-    // Required from CHI Rev E.b 14.1.3
-    RX_LINKACTIVEACK_out.write(false);
-
-    // All other states
-    rx_link_state_current_ = ELinkState::STOP;
-    rx_link_state_next_ = ELinkState::STOP;
-}
-
-void RnIfxAdapter::rx_link_handshake()
-{
-    if (RXSACTIVE_in.read() && RX_LINKACTIVEREQ_in.read())
-    {
-        rx_link_state_next_ = ELinkState::ACTIVATE;
-        std::cout << "rx_link_handshake (ELinkState::ACTIVATE)\n";
-    }
-
-    if (ELinkState::ACTIVATE == rx_link_state_current_)
-    {
-        RX_LINKACTIVEACK_out.write(true);
-        rx_link_state_next_ = ELinkState::RUN;
-        std::cout << "rx_link_handshake (ELinkState::RUN)\n";
-    }
-}
-
-void RnIfxAdapter::update_rx_link_state()
-{
-    if (rx_link_state_current_ == rx_link_state_next_)
-    {
-        return;
-    }
-
-    rx_link_state_current_ = rx_link_state_next_;
-}
-
 void RnIfxAdapter::bind_tx_channels()
 {
     tx_channel_->intfrx_clk_in(intfrx_clk_in);
@@ -140,4 +102,30 @@ void RnIfxAdapter::bind_tx_channels()
     tx_channel_->TX_DATFLITV_out(TX_DATFLITV_out);
     tx_channel_->TX_DATFLIT_out(TX_DATFLIT_out);
     tx_channel_->TX_DATLCRDV_in(TX_DATLCRDV_in);
+}
+
+void RnIfxAdapter::bind_rx_channels()
+{
+    rx_channel_->intfrx_clk_in(intfrx_clk_in);
+    rx_channel_->rstb_intfrx_clk_in(rstb_intfrx_clk_in);
+
+    rx_channel_->RXSACTIVE_in(RXSACTIVE_in);
+
+    rx_channel_->RX_LINKACTIVEREQ_in(RX_LINKACTIVEREQ_in);
+    rx_channel_->RX_LINKACTIVEACK_out(RX_LINKACTIVEACK_out);
+
+    rx_channel_->RX_RSPFLITPEND_in(RX_RSPFLITPEND_in);
+    rx_channel_->RX_RSPFLITV_in(RX_RSPFLITV_in);
+    rx_channel_->RX_RSPFLIT_in(RX_RSPFLIT_in);
+    rx_channel_->RX_RSPLCRDV_out(RX_RSPLCRDV_out);
+
+    rx_channel_->RX_DATFLITPEND_in(RX_DATFLITPEND_in);
+    rx_channel_->RX_DATFLITV_in(RX_DATFLITV_in);
+    rx_channel_->RX_DATFLIT_in(RX_DATFLIT_in);
+    rx_channel_->RX_DATLCRDV_out(RX_DATLCRDV_out);
+
+    rx_channel_->RX_SNPFLITPEND_in(RX_SNPFLITPEND_in);
+    rx_channel_->RX_SNPFLITV_in(RX_SNPFLITV_in);
+    rx_channel_->RX_SNPFLIT_in(RX_SNPFLIT_in);
+    rx_channel_->RX_SNPLCRDV_out(RX_SNPLCRDV_out);
 }
