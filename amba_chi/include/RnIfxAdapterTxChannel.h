@@ -4,6 +4,8 @@
 #include <systemc>
 #include <flits/definitions.h>
 
+#include <chi_tlm/chi_tlm_extension.h>
+
 enum class ELinkState;
 
 SC_MODULE(RnIfxAdapterTxChannel)
@@ -37,6 +39,10 @@ public:
     sc_core::sc_in<bool> TX_DATLCRDV_in;
 
     void initialize();
+
+    void send_chi_req(const chi::ChiExtension* message);
+    void send_chi_wdat(const chi::ChiExtension* message);
+    void send_chi_srsp(const chi::ChiExtension* message);
 
 private:
     void main_process();

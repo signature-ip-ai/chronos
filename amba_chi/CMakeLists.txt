@@ -13,7 +13,7 @@ set(CUSTOM_CXX_FLAGS -Wall -Werror -Wno-format -O0 -g)
 ########## Build Library
 get_target_property(SYSTEMC_INCLUDE_DIRS SystemC::systemc INTERFACE_INCLUDE_DIRECTORIES)
 
-file(GLOB sources src/*.cpp)
+file(GLOB_RECURSE sources src/*.cpp)
 
 add_library(${PROJECT_NAME} STATIC ${sources})
 target_include_directories(${PROJECT_NAME} PUBLIC include ${SYSTEMC_INCLUDE_DIRS} ${SPDLOG_INCLUDE_DIRS})
@@ -27,8 +27,10 @@ file(GLOB_RECURSE TARGET_LIBRARY_HEADERS
     include/ProgIfxAdapter.h
     include/QpIfxAdapter.h
     include/ClkResetIfx.h
-    include/chi_enums.h
-    include/chi_tlm_extension.h
+    include/chi_tlm/chi_enums.h
+    include/chi_tlm/chi_tlm_extension.h
+    include/chi_tlm/chi_credit_extension.h
+    include/chi_tlm/chi_packet.h
     include/flits/definitions.h)
 
 target_sources(${PROJECT_NAME} PUBLIC FILE_SET HEADERS BASE_DIRS include FILES ${TARGET_LIBRARY_HEADERS})
